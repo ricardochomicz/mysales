@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Mail\OrderActivate;
 use App\Models\Comment;
 use App\Models\Opportunity;
 use Carbon\Carbon;
@@ -50,25 +51,21 @@ class OrderService
 
                 if ((int)$data['status_id'] === 3 || (int)$data['status_id'] === 4) {
                     $data['type'] = 'wallet';
-                    $order->client->operator_id = $order->operator;
                     if($order->activate >= Carbon::now()){
                         $this->comments('Pedido Faturado/Ativo', $order->id, $order->client_id, 'order');
                     }
-//                    $this->comments('Pedido Faturado/Ativo', $order->id, $order->client_id, 'order');
                 } elseif ((int)$data['status_id'] === 7) {
                     $this->comments('Devolvido Consultor', $order->id, $order->client_id, 'order');
                 }
-
                 $order->update($data);
             }
 
-
-//            if ($order->client->persons[0]->email != '' && ($data['status_id'] === 3 || $data['status_id'] === 4)) {
-//                $order->client->update(['operator_id' => $order->operator_id]);
-//                Mail::to(@$order->client->persons[0]->email)
-//                    ->cc('comercial@42telecom.com.br')
-//                    ->send(new OrderActive($order));
-//            }
+            if ($order->client->persons[0]->email != '' && ($data['status_id'] === 3 || $data['status_id'] === 4)) {
+                $order->client->update(['operator_id' => $order->operator]);
+                Mail::to(@$order->client->persons[0]->email)
+                    ->cc('empresas.atendimento@gmail.com')
+                    ->send(new OrderActivate($order));
+            }
 
             DB::commit();
             return true;

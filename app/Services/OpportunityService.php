@@ -77,7 +77,7 @@ class OpportunityService
 
             if($data['funnel'] == 'send_order'){
                 $this->opportunityGain($opportunity->id);
-                $this->comments($data['content'], $opportunity->id, $opportunity->client_id, 'order');
+                $this->comments('Pedido Criado', $opportunity->id, $opportunity->client_id, 'order');
             }
 
             $opportunity->update($data);

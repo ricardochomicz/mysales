@@ -14,7 +14,7 @@ class ClientService extends BaseService
     protected function handleBeforeSave(array $data): array
     {
         $data['user_id'] = auth()->user()->id;
-        $data['classification'] = 1;
+        $data['classification_id'] = 1;
 
         return $data;
     }

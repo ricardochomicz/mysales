@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OpportunityRequest;
 use App\Models\Opportunity;
 use App\Services\OperatorService;
 use App\Services\OpportunityService;
@@ -49,7 +50,7 @@ class OpportunityController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(OpportunityRequest $request)
     {
         try {
             $this->opportunityService->store($request->all());
@@ -91,7 +92,7 @@ class OpportunityController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(OpportunityRequest $request, $id)
     {
         try {
             $this->opportunityService->update($request->all(), $id);

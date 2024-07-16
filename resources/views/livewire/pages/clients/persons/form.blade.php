@@ -49,7 +49,7 @@
             <div class="modal-content">
                 <form wire:submit.prevent="save">
                     <div class="modal-header">
-                        <h5 class="modal-title">{{ $personId ? 'Edit Person' : 'Add New Person' }}</h5>
+                        <h5 class="modal-title">{{ $personId ? 'Editar Contato' : 'Adicionar Contato' }}</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -86,7 +86,7 @@
                             </div>
                             <div class="form-group col-sm-6">
                                 <label for="phone" class="form-label">Telefone:</label>
-                                <input wire:model="phone" id="phone" class="form-control"/>
+                                <input wire:model="phone" id="phone" class="form-control" />
                             </div>
                         </div>
                         <div class="row">
@@ -113,5 +113,4 @@
 
 @push('scripts')
     <script src="https://unpkg.com/@nextapps-be/livewire-sortablejs@0.3.0/dist/livewire-sortable.js"></script>
-
 @endpush

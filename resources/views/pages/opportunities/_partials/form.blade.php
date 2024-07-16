@@ -12,14 +12,18 @@
         @if( Route::currentRouteNamed('opportunities.create'))
             <div class="row">
                 <div class="form-group col-sm-10">
-                    <input class="form-control form-control-navbar typeahead2" type="search" name="query"
+                    <input class="form-control form-control-navbar typeahead2 @error('client_id') is-invalid @enderror" type="search" name="query"
                            data-provide="typeahead"
                            placeholder="Pesquise pelo nome ou CNPJ">
+
                     <x-input type="hidden" id="client_id" name="client_id"/>
                 </div>
                 <div class="form-group col-sm-2">
                     <a href="{{route('clients.create')}}" class="btn btn-dark">Cadastrar Cliente</a>
                 </div>
+            </div>
+            <div class="alert alert-danger d-none" id="empty-message">Cliente não possui contatos cadastrados. Para continuar cadastre <a
+                    href="javascript:void(0)" class="alert-link" id="register-link">aqui</a> um novo contato.
             </div>
         @else
             <p class="h5 font-weight-bold">{{@$data->client->name}}<br><small>#{{@$data->identify}}</small></p>
@@ -73,7 +77,7 @@
 
         <livewire:pages.opportunities.items.product-modal/>
 
-        <button type="submit" class="btn btn-primary">Salvar</button>
+        <button type="submit" class="btn btn-primary" id="opportunitySubmit">Salvar</button>
         <a href="{{ route('opportunities.index') }}" class="btn btn-secondary">Voltar</a>
     </div>
 </div>
@@ -135,6 +139,25 @@
                 afterSelect: function (item) {
                     let id = item.id
                     $("#client_id").val(id)
+                    let url = '{{ route("clients.getclient", ":id") }}';
+                    url = url.replace(':id', item.id);
+                    $.ajax({
+                        type: 'get',
+                        url: url,
+                        dataType: 'JSON',
+                        success: function (data) {
+                            if (!data.persons || data.persons.length === 0) {
+                                $('#register-link').attr('href', '{{ route("clients.show", ":id") }}'.replace(':id', item.id));
+                                $('#empty-message').removeClass('d-none');
+                                $('#opportunitySubmit').attr('disabled', true)
+                            } else {
+                                $('#empty-message').addClass('d-none');
+                                $('#opportunitySubmit').attr('disabled', false)
+
+                            }
+                        }
+                    })
+
                 },
             });
         });

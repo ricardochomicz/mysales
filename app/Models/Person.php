@@ -30,6 +30,13 @@ class Person extends Model
         return $this->belongsTo(Client::class);
     }
 
+    protected function name(): Attribute
+    {
+        return Attribute::make(
+            set: fn(string $value) => mb_strtoupper($value),
+        );
+    }
+
     protected function phone(): Attribute
     {
         return Attribute::make(

@@ -48,6 +48,7 @@ class BaseService
             DB::commit();
             return $model;
         }catch (\Throwable $e){
+            dd($e);
             DB::rollBack();
             throw $e;
         }
