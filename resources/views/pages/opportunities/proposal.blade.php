@@ -143,7 +143,7 @@
                 Cel: {{ $opportunity->user->phone }}<br>
                 E-mail: {{ $opportunity->user->email }}<br>
                 Ponta Grossa-PR<br>
-                <img src="../../images/lt.png" alt="Logo" width="250px">
+                <img src="{{ asset('../assets/images/lt.png') }}" alt="Logo" width="250px">
             </div>
         </div>
         <div class="row no-print">
