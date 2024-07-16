@@ -97,7 +97,7 @@
             if ("{{ app()->environment() }}" === 'local') {
                 baseUrl = 'http://localhost:8083';
             } else {
-                baseUrl = 'https://42telecom.com.br/mysales';
+                baseUrl = 'https://mysales.42telecom.com.br';
             }
 
             let url = baseUrl + '/app/clients/' + doc + '/document';
