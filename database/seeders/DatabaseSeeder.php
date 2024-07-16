@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Classification;
 use App\Models\OrderType;
 use App\Models\Plan;
 use App\Models\Role;
@@ -152,5 +153,10 @@ class DatabaseSeeder extends Seeder
         foreach ($tag_orders as $value) {
             Tag::create($value);
         }
+
+        Classification::create([
+            'name' => 'DEFAULT',
+            'months' => 20
+        ]);
     }
 }
