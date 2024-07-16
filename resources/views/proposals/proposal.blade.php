@@ -29,20 +29,20 @@
         <div class="row">
             <div class="col-12">
                 <h2 class="page-header">
-                    @if($opportunity->operator->name == 'CLARO')
+                    @if(@$opportunity->operadora->name == 'CLARO')
                         <img src="{{asset('../assets/images/claro-logo.png')}}" alt="Logo" width="100px">
-                    @elseif($opportunity->operator->name == 'TIM')
+                    @elseif(@$opportunity->operadora->name == 'TIM')
                         <img src="{{asset('../assets/images/tim-logo.png')}}" alt="Logo" width="100px">
-                    @elseif($opportunity->operator->name == 'VIVO')
+                    @elseif(@$opportunity->operadora->name == 'VIVO')
                         <img src="{{asset('../assets/images/vivo-logo.png')}}" alt="Logo" width="100px">
                     @else
                         Proposta Comercial
                     @endif
-                    @if($opportunity->operator->name == 'CLARO')
+                    @if(@$opportunity->operator->name == 'CLARO')
                         Proposta Comercial Claro Empresas
-                    @elseif($opportunity->operator->name == 'TIM')
+                    @elseif(@$opportunity->operator->name == 'TIM')
                         Proposta Comercial Tim Empresas
-                    @elseif($opportunity->operator->name == 'VIVO')
+                    @elseif(@$opportunity->operator->name == 'VIVO')
                         Proposta Comercial Vivo Empresas
                     @else
                         Proposta Comercial
@@ -58,19 +58,19 @@
             <div class="col-sm-4 invoice-col">
                 Empresa
                 <address>
-                    <strong>{{ $opportunity->client->name }}</strong><br/>
-                    {{ $opportunity->client->document }}<br/>
-                    {{ $opportunity->client->address }}, {{ $opportunity->client->number }}<br/>
-                    {{ $opportunity->client->city }}-{{ $opportunity->client->state }}<br/>
+                    <strong>{{ @$opportunity->client->name }}</strong><br/>
+                    {{ @$opportunity->client->document }}<br/>
+                    {{ @$opportunity->client->address }}, {{ @$opportunity->client->number }}<br/>
+                    {{ @$opportunity->client->city }}-{{ @$opportunity->client->state }}<br/>
                 </address>
             </div>
             <!-- /.col -->
             <div class="col-sm-4 invoice-col">
                 A/C
                 <address>
-                    <strong>{{ @$opportunity->client->persons[0]->name }}</strong><br/>
-                    Telefone: {{ @$opportunity->client->persons[0]->phone }}<br/>
-                    Email: {{ @$opportunity->client->persons[0]->email }}
+                    <strong>{{ @@$opportunity->client->persons[0]->name }}</strong><br/>
+                    Telefone: {{ @@$opportunity->client->persons[0]->phone }}<br/>
+                    Email: {{ @@$opportunity->client->persons[0]->email }}
                 </address>
             </div>
 
@@ -94,7 +94,7 @@
                     </thead>
                     <tbody>
 
-                    @foreach ($opportunity->items_opportunity as $item)
+                    @foreach (@$opportunity->items_opportunity as $item)
                         <tr>
                             <td>{{ $item->type->name }}</td>
                             <td>{{ $item->number }}</td>
@@ -122,7 +122,7 @@
             <!-- accepted payments column -->
             <div class="col-8">
                 <p class="lead">Informações:</p>
-                @if($opportunity->operator->name == 'CLARO')
+                @if(@$opportunity->operadora->name == 'CLARO')
                     <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
                         Proposta válida por 5 dias.<br>
                         Ligações ilimitadas para qualquer operadora local e DDD usando
@@ -134,7 +134,7 @@
                         Bônus de 30GB de internet compartilhada na convergência<br>
                         Permenência do contrato: 24 meses
                     </p>
-                @elseif($opportunity->operator->name == 'TIM')
+                @elseif(@$opportunity->operadora->name == 'TIM')
                     <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
                         Proposta válida por 5 dias.<br>
                         Ligações ilimitadas para qualquer operadora local e DDD usando
@@ -142,7 +142,7 @@
                         Tim Fibra internet com ultra velocidade <br>
                         Permenência do contrato: 24 meses
                     </p>
-                @elseif($opportunity->operator->name == 'VIVO')
+                @elseif(@$opportunity->operadora->name == 'VIVO')
                     <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
                         Proposta válida por 5 dias.<br>
                         Ligações ilimitadas para qualquer operadora local e DDD usando
@@ -164,7 +164,7 @@
                         <tr>
                             <th style="width:50%">Proposta:</th>
 
-                            <td>R${{ number_format($opportunity->total, 2, ',', '.') }}</td>
+                            <td>R${{ number_format(@$opportunity->total, 2, ',', '.') }}</td>
                         </tr>
                         <tr>
                             <th>Aparelhos (24x)</th>
@@ -175,7 +175,7 @@
                         </tr>
                         <tr>
                             <th>Total Mensal:</th>
-                            <td>R${!! number_format($opportunity->total, 2,',','.') !!}</td>
+                            <td>R${!! number_format(@$opportunity->total, 2,',','.') !!}</td>
                         </tr>
                     </table>
                 </div>
@@ -185,9 +185,9 @@
         <br>
         <div class="row mt-5">
             <div class="col-12">
-                <strong>{{ $opportunity->client->user->name }}</strong><br/>
-                Cel: <a href="https://wa.me/55{{ $opportunity->client->user->phone }}">{{ $opportunity->client->user->phone }} <i class="fas fa-comment-dots"></i></a> <br>
-                E-mail: <a href="mailto:{{ $opportunity->client->user->email }}"> {{ $opportunity->client->user->email }} <i class="fas fa-envelope"></i></a> <br>
+                <strong>{{ @$opportunity->client->user->name }}</strong><br/>
+                Cel: <a href="https://wa.me/55{{ @$opportunity->client->user->phone }}">{{ @$opportunity->client->user->phone }} <i class="fas fa-comment-dots"></i></a> <br>
+                E-mail: <a href="mailto:{{ @$opportunity->client->user->email }}"> {{ @$opportunity->client->user->email }} <i class="fas fa-envelope"></i></a> <br>
                 Ponta Grossa-PR <br>
                 <img src="{{ asset('../assets/images/logotipo.png') }}" alt="Logo" width="250px">
 
