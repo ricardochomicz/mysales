@@ -1,0 +1,76 @@
+
+services:
+
+    #PHP Service
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: digitalocean.com/php
+        container_name: app_mysales
+        restart: unless-stopped
+        tty: true
+        environment:
+            SERVICE_NAME: app
+            SERVICE_TAGS: dev
+        working_dir: /var/www/mysales
+        volumes:
+            - ./:/var/www/mysales
+            - ./php/local.ini:/usr/local/etc/php/conf.d/local.ini
+        networks:
+            - app-network
+        depends_on:
+            - composer_install
+
+    #Nginx Service
+    webserver:
+        image: nginx:alpine
+        container_name: webserver_mysales
+        restart: unless-stopped
+        tty: true
+        working_dir: /var/www/mysales
+        ports:
+            - "8083:80"
+        volumes:
+            - ./nginx/conf.d/app.conf:/etc/nginx/conf.d/app.conf
+            - ./:/var/www/mysales
+        networks:
+            - app-network
+
+    #MySQL Service
+    db:
+        image: mysql:latest
+        container_name: db
+        restart: unless-stopped
+        tty: true
+        ports:
+            - "3306:3306"
+        environment:
+            MYSQL_DATABASE: mysales
+            MYSQL_ROOT_PASSWORD: root
+            SERVICE_TAGS: dev
+            SERVICE_NAME: mysql
+        volumes:
+            - dbdata:/var/lib/mysql
+            - ./mysql/my.conf:/etc/mysql/my.conf
+        networks:
+            - app-network
+
+    composer_install:
+        image: composer:latest
+        volumes:
+            - ./:/app
+        working_dir: /app
+        command: composer install --ignore-platform-reqs --no-scripts
+        depends_on:
+            - db
+
+#Docker Networks
+networks:
+    app-network:
+        driver: bridge
+
+#Volumes
+volumes:
+    dbdata:
+        driver: local
