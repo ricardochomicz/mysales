@@ -58,7 +58,7 @@
                                      ( {{$d->qty}} )
                                 </td>
                                 <td class="text-center">
-                                    {{$d->client->classification->name}}
+                                    {{$d->client->classification->name}}<br>{{$d->client->classification->months}}
                                 </td>
 
                                 <td class="text-center">
@@ -71,7 +71,6 @@
                                 </td>
                                 <td class="text-center">
                                     {{ floor(\Carbon\Carbon::now()->diffInMonths(\Carbon\Carbon::parse($d->renew_date))) }}
-
                                 </td>
 
                                 <td class="text-center">
