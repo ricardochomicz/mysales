@@ -70,7 +70,7 @@
 
                                 </td>
                                 <td class="text-center">
-                                    {{ floor(\Carbon\Carbon::now()->diffInMonths(\Carbon\Carbon::parse($d->renew_date))) }}
+                                    {{ floor(\Carbon\Carbon::now()->diffInMonths(\Carbon\Carbon::parse($d->renew_date))+1) }}
                                 </td>
 
                                 <td class="text-center">
