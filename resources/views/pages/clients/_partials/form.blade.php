@@ -116,7 +116,6 @@
                                 toast: true,
                                 confirmButtonText: '<a href="{{route('clients.index')}}" style="color: #fff">Fechar</a>',
                             })
-                            console.log("Cliente já cadastrado.");
                         } else {
                             cnpj = doc.replace(/[^\d]+/g, "");
                             $.ajax({

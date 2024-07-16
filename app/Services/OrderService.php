@@ -30,8 +30,6 @@ class OrderService
 
     public function update($data, $id)
     {
-
-
         try {
             DB::beginTransaction();
             $order = $this->get($id);
@@ -53,6 +51,7 @@ class OrderService
 
                 if ((int)$data['status_id'] === 3 || (int)$data['status_id'] === 4) {
                     $data['type'] = 'wallet';
+                    $order->client->operator_id = $data['operator'];
                     if($order->activate >= Carbon::now()){
                         $this->comments('Pedido Faturado/Ativo', $order->id, $order->client_id, 'order');
                     }
