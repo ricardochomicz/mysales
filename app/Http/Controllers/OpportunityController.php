@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\OpportunityRequest;
+use App\Models\ItemOpportunity;
 use App\Models\Opportunity;
 use App\Services\OperatorService;
 use App\Services\OpportunityService;
@@ -134,6 +135,28 @@ class OpportunityController extends Controller
 
         notyf()->success('Enviado BKO com sucesso.');
         return redirect()->route('opportunities.index');
+    }
+
+    public function getPagePrint($uuid)
+    {
+        $opportunity = Opportunity::with(['client', 'client.persons', 'items_opportunity', 'operadora', 'ordem', 'user'])->where('uuid', $uuid)->first();
+        $view = [
+            'opportunity' => $opportunity,
+            'items' => ItemOpportunity::with(['product', 'type'])->where('opportunity_id', $opportunity->id)->get()
+        ];
+
+        return view('pages.opportunities.proposal', $view);
+    }
+
+    public function myProposal($uuid): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application
+    {
+        $opportunity = Opportunity::with(['client', 'client.persons', 'items_opportunity', 'operadora', 'ordem', 'user'])->where('uuid', $uuid)->first();
+        if ($opportunity) {
+            return view('proposals.proposal', compact('opportunity'));
+        } else {
+            return view('proposal.404');
+        }
+
     }
 
 

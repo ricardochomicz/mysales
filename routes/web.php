@@ -158,6 +158,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'app'], function () {
     Route::put('opportunities/update-kanban/{id}', [\App\Http\Controllers\OpportunityController::class, 'updateKanban'])->name('opportunities.update.kanban');
     Route::get('opportunities/{id}/gain', [\App\Http\Controllers\OpportunityController::class, 'opportunityGain'])->name('opportunities.gain');
     Route::put('update-forecast/{id}', [\App\Http\Controllers\OpportunityController::class, 'updateForecast'])->name('opportunities.update.forecast');
+    Route::get('opportunity-proposal/{uuid}', [\App\Http\Controllers\OpportunityController::class, 'getPagePrint'])->name('opportunity-proposal');
 
     Route::get('orders/{id}/edit', [\App\Http\Controllers\OrderController::class, 'edit'])->name('orders.edit');
     Route::put('orders/{id}', [\App\Http\Controllers\OrderController::class, 'update'])->name('orders.update');
@@ -177,6 +178,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'app'], function () {
 Route::get('plan/{slug}', [\App\Http\Controllers\SiteController::class, 'plan'])->name('plan.subscription');
 Route::get('/mycrm-plans', [\App\Http\Controllers\SiteController::class, 'index'])->name('site');
 Route::get('my-protocols/client/{uuid}', [\App\Http\Controllers\ClientController::class, 'myProtocols'])->name('my-protocols');
+Route::get('my-proposal/{uuid}', [\App\Http\Controllers\OpportunityController::class, 'myProposal'])->name('proposal');
 
 Route::get('/', function(){
     return view('auth.login');

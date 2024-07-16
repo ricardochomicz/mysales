@@ -33,6 +33,7 @@
                         href="https://wa.me/55{{@$data->client->persons[0]->phone}}"
                         target="_blank">{{@$data->client->persons[0]->phone}}</a>
                 </p>
+                <a href="{{route('opportunity-proposal', @$data->uuid)}}" target="_blank" class="btn btn-primary"><i class="fas fa-print"></i> Imprimir Proposta</a>
             @else
                 <p class="text-danger">Nenhum contato cadastrado para o cliente. <a href="{{route('clients.show', @$data->client->id)}}">Cadastre aqui.</a></p>
             @endif
@@ -44,7 +45,9 @@
                        value="{{old(0) ?? @$data->probability}}">
                 <span id="range_value">0</span>%
             </div>
+            <div class="form-group col-sm-6 mt-2 mb-3 text-right">
 
+            </div>
         </div>
 
         <div class="row">

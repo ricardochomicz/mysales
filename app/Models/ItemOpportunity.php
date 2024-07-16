@@ -33,6 +33,6 @@ class ItemOpportunity extends Model
 
     public function type(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(OrderType::class);
+        return $this->belongsTo(OrderType::class, 'order_type_id');
     }
 }
