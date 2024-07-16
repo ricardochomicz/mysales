@@ -92,7 +92,7 @@ class OpportunityController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(OpportunityRequest $request, $id)
+    public function update(Request $request, $id)
     {
         try {
             $this->opportunityService->update($request->all(), $id);

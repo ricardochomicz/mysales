@@ -59,7 +59,7 @@ class ClientController extends Controller
         try {
             $this->clientService->store($request->all());
             notyf()->success('Cliente cadastrado com sucesso.');
-            return redirect()->route('opportunites.create');
+            return to_route('opportunities.create');
         } catch (\Throwable $e) {
             notyf()->error("Ops! Erro ao cadastrar.");
             return back();

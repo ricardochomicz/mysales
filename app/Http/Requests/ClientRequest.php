@@ -24,6 +24,7 @@ class ClientRequest extends FormRequest
         $rules = [
             'document' => 'required|unique:clients,document',
             'name' => 'required',
+            'operator_id' => 'required',
         ];
 
         if ($this->method() == 'PUT') {
@@ -41,6 +42,7 @@ class ClientRequest extends FormRequest
         return [
             'document.required' => 'Informe o CNPJ do cliente',
             'name.required' => 'Informe o nome do cliente',
+            'operator_id.required' => 'Selecione a operadora',
         ];
     }
 }
