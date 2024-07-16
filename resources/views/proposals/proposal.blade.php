@@ -189,7 +189,7 @@
                 Cel: <a href="https://wa.me/55{{ @$opportunity->client->user->phone }}">{{ @$opportunity->client->user->phone }} <i class="fas fa-comment-dots"></i></a> <br>
                 E-mail: <a href="mailto:{{ @$opportunity->client->user->email }}"> {{ @$opportunity->client->user->email }} <i class="fas fa-envelope"></i></a> <br>
                 Ponta Grossa-PR <br>
-                <img src="{{ asset('../assets/images/logotipo.png') }}" alt="Logo" width="250px">
+                <img src="{{ asset('../assets/images/lt.png') }}" alt="Logo" width="250px">
 
             </div>
         </div>
