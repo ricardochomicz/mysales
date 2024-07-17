@@ -7,24 +7,19 @@
             <h4 class="d-inline-block text-light mb-0 float-right">Detalhes</h4>
         </header>
         <div class="bs-canvas-content px-1">
-            <div class="list-group my-5">
-                <a href="#" class="list-group-item list-group-item-action">{{@$items->client->name}}</a>
-                <a href="#" class="list-group-item list-group-item-action">{{@$items->operadora->name}}
-                    - {{@$items->ordem->name}}</a>
-                <a href="#" class="list-group-item list-group-item-action">Criado em:
-                    <b>{{\Carbon\Carbon::parse(@$items->created_at)->format('d/m/Y')}}</b></a>
-                <a href="#" class="list-group-item list-group-item-action">Qtd Linhas: <b>{{@$items->qty}}</b></a>
-                <a href="#" class="list-group-item list-group-item-action">Receita:
-                    <b>R$ {{number_format(@$items->total, 2, ',', '.')}}</b></a>
-                <a href="#" class="list-group-item list-group-item-action">Ativação: <b>
-                        @if(@$items->activate)
-                            {{\Carbon\Carbon::parse(@$items->activate)->format('d/m/Y')}}
-                        @else
-                            -
-                        @endif
-                    </b>
-                </a>
+            <div class="invoice-col p-2">
+                <address>
+                    <strong>{{@$items->client->name}}</strong><br/>
+                    <b>{{@$items->operadora->name}} - {{@$items->ordem->name}}</b><br/>
+                    Criado em: <b>{{\Carbon\Carbon::parse(@$items->created_at)->format('d/m/Y')}}</b><br/>
+                    Qtd Linhas: <b>{{@$items->qty}}</b><br/>
+                    Receita: <b>R$ {{number_format(@$items->total, 2, ',', '.')}}</b><br>
+                    @if(@$items->activate)
+                        Ativação: <b>{{\Carbon\Carbon::parse(@$items->activate)->format('d/m/Y')}}</b>
+                    @endif
+                </address>
             </div>
+
             <table class="table">
                 <thead class="thead-light">
                 <tr>
@@ -42,7 +37,8 @@
                             <th class="align-middle"><small>{{@$item->type->name}}</small></th>
                             <th class="text-center align-middle"><small>{{$item->number}}</small></th>
                             <th class="align-middle"><small>{{$item->product->name}}</small></th>
-                            <td class="text-center align-middle"><small>R$ {{number_format($item->price, 2, ',','.')}}<br>( {{$item->qty}} )</small></td>
+                            <td class="text-center align-middle"><small>R$ {{number_format($item->price, 2, ',','.')}}
+                                    <br>( {{$item->qty}} )</small></td>
                         </tr>
                     @endforeach
                 @endif
