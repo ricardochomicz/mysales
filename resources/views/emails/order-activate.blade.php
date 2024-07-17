@@ -31,7 +31,9 @@
 <body>
 
 
-<h3>Olá, <b>{{$order->client->persons[0]->name}}.</b></h3>
+<h3>Olá, <b>{{$order->client->persons[0]->name}}.</b><br>
+    {{$order->client->name}}
+</h3>
 <p>
     Seu pedido com a <b>{{ $order->operadora->name }}</b> faturou :)
 </p>
@@ -50,22 +52,22 @@
         <thead>
         <tr>
             <th>Tipo</th>
-            <th class="text-center">Linha</th>
+            <th class="text-center" style="text-align: center">Linha</th>
             <th>Plano</th>
-            <th class="text-center">Qtd</th>
-            <th class="text-center" align="center">Valor Unit</th>
-            <th class="text-center">Valor Total</th>
+            <th class="text-center" style="text-align: center">Qtd</th>
+            <th class="text-center" style="text-align: center">Valor Unit</th>
+            <th class="text-center" style="text-align: center">Valor Total</th>
         </tr>
         </thead>
         <tbody>
         @foreach($order->items_opportunity as $item)
             <tr>
                 <td>{{$item->type->name}}</td>
-                <td class="text-center">{{$item->number}}</td>
+                <td class="text-center" style="text-align: center">{{$item->number}}</td>
                 <td>{{$item->product->name}}</td>
-                <td class="text-center">{{$item->qty}}</td>
-                <td class="text-center" align="center">R$ {!! number_format($item->price, 2, ',', '.') !!}</td>
-                <td class="text-center">R$ {{ $item->qty * $item->price }}</td>
+                <td class="text-center" style="text-align: center">{{$item->qty}}</td>
+                <td class="text-center" style="text-align: center">R$ {!! number_format($item->price, 2, ',', '.') !!}</td>
+                <td class="text-center" style="text-align: center">R$ {{ $item->qty * $item->price }}</td>
             </tr>
         @endforeach
         </tbody>
