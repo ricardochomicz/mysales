@@ -19,34 +19,34 @@
                     @endif
                 </address>
             </div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="thead-light">
+                    <tr>
+                        <th>Tipo</th>
+                        <th class="text-center">Número</th>
+                        <th>Item</th>
+                        <th class="text-center">Valor/Qtd</th>
+                    </tr>
+                    </thead>
+                    <tbody>
 
-            <table class="table">
-                <thead class="thead-light">
-                <tr>
-                    <th>Tipo</th>
-                    <th class="text-center">Número</th>
-                    <th>Item</th>
-                    <th class="text-center">Valor/Qtd</th>
-                </tr>
-                </thead>
-                <tbody>
+                    @if(isset($items))
+                        @foreach($items->items_opportunity as $item)
+                            <tr>
+                                <th class="align-middle"><small>{{@$item->type->name}}</small></th>
+                                <th class="text-center align-middle"><small>{{$item->number}}</small></th>
+                                <th class="align-middle"><small>{{$item->product->name}}</small></th>
+                                <td class="text-center align-middle">
+                                    <small>R$ {{number_format($item->price, 2, ',','.')}}
+                                        <br>( {{$item->qty}} )</small></td>
+                            </tr>
+                        @endforeach
+                    @endif
 
-                @if(isset($items))
-                    @foreach($items->items_opportunity as $item)
-                        <tr>
-                            <th class="align-middle"><small>{{@$item->type->name}}</small></th>
-                            <th class="text-center align-middle"><small>{{$item->number}}</small></th>
-                            <th class="align-middle"><small>{{$item->product->name}}</small></th>
-                            <td class="text-center align-middle"><small>R$ {{number_format($item->price, 2, ',','.')}}
-                                    <br>( {{$item->qty}} )</small></td>
-                        </tr>
-                    @endforeach
-                @endif
-
-                </tbody>
-            </table>
-
-
+                    </tbody>
+                </table>
+            </div>
             <p class="text-muted small">Enviar Proposta</p>
             <div class="input-group flex-nowrap">
                 <div class="input-group-prepend">
