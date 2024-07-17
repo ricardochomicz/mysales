@@ -281,10 +281,10 @@ class ProductModal extends Component
         $items = $items instanceof Collection ? $items : Collection::make($items);
 
         $path = Request::path();
-        dd($path);
 
         if (str_contains($path, 'edit')) {
             $basePath = Str::beforeLast('./edit', $path);
+            dd($basePath);
         }else{
             $basePath = Str::beforeLast('./create', $path);
         }
