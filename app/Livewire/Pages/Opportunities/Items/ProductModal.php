@@ -275,7 +275,7 @@ class ProductModal extends Component
     }
 
 
-    private function paginate($items, $perPage = 15, $page = null, $options = []): LengthAwarePaginator
+    private function paginate($items, $perPage = 20, $page = null, $options = []): LengthAwarePaginator
     {
         $page = $page ?: LengthAwarePaginator::resolveCurrentPage() ?: 1;
         $items = $items instanceof Collection ? $items : Collection::make($items);
