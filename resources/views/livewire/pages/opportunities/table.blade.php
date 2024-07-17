@@ -143,8 +143,7 @@
         </div>
     </div>
 
-
-    <div class="modal fade" id="modalComments" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modalComments"  aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore>
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -158,18 +157,18 @@
                     <div class=" card-widget">
                         <div class="card-footer card-comments" style="margin: 0 auto; max-height: calc(50vh - 50px); overflow-y: auto;">
                             @foreach($comments as $comment)
-                            <div class="card-comment">
-                                <div class="comment-text">
+                                <div class="card-comment">
+                                    <div class="comment-text">
                                     <span class="username">{{$comment->user->name}}
                                         <span class="text-muted float-right">{{Carbon\Carbon::parse($comment->created_at)->format('d/m/Y H:i')}}</span>
                                     </span>
-                                    @if($comment->type == 'order')
-                                        <small class="font-italic">(Pedido)</small> {{$comment->content}}
-                                    @else
-                                        {{$comment->content}}
+                                        @if($comment->type == 'order')
+                                            <small class="font-italic">(Pedido)</small> {{$comment->content}}
+                                        @else
+                                            {{$comment->content}}
                                         @endif
+                                    </div>
                                 </div>
-                            </div>
                             @endforeach
                         </div>
                     </div>
@@ -181,7 +180,10 @@
         </div>
     </div>
 
+
+
 </div>
+
 
 
 

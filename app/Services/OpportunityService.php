@@ -158,8 +158,8 @@ class OpportunityService
         $allItems = session('items', []);
 
         // Se não houver items na sessão, pegue os items do próprio estado
-        if (empty($allItems)) {
-            $allItems = $this->items;
+        if (empty($allItems) && property_exists($this, 'items')) {
+            $allItems = $this->items ?? [];
         }
 
         return $allItems;
