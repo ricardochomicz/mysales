@@ -42,7 +42,7 @@
                 </td>
                 <td class="text-center">
                     @if($order->activate)
-                        {{floor(\Carbon\Carbon::now()->diffInMonths(\Carbon\Carbon::parse($order->activate))+1)}}
+                        {{floor(\Carbon\Carbon::parse($order->activate)->diffInMonths(\Carbon\Carbon::now()))}}
                     @else
                         -
                     @endif
