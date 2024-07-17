@@ -143,7 +143,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modalComments"  aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore>
+    <div class="modal fade" id="modalComments"  aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore.self>
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -154,6 +154,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
+
                     <div class=" card-widget">
                         <div class="card-footer card-comments" style="margin: 0 auto; max-height: calc(50vh - 50px); overflow-y: auto;">
                             @foreach($comments as $comment)

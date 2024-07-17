@@ -21,7 +21,7 @@ class Comment extends Model
 
     public function opportunity(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Opportunity::class);
+        return $this->belongsTo(Opportunity::class, 'opportunity_id');
     }
 
     public function user()

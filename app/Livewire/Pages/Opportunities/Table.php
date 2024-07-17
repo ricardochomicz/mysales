@@ -111,6 +111,8 @@ class Table extends Component
     {
         $this->opportunity = Opportunity::with('client')->find($id);
         $this->comments = $this->opportunity->comments;
+
+        $this->dispatch('openModal');
     }
 
 

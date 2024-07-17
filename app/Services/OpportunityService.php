@@ -75,7 +75,6 @@ class OpportunityService
 
     public function update($data, $id)
     {
-
         try {
             DB::beginTransaction();
             $opportunity = $this->get($id);
@@ -89,7 +88,10 @@ class OpportunityService
 
             $allDynamicFields = $this->getAllItems();
 
-            $this->items_opportunity($allDynamicFields, $opportunity->id);
+            // Atualizar ou criar itens de oportunidade
+            if (!empty($allDynamicFields)) {
+                $this->items_opportunity($allDynamicFields, $opportunity->id);
+            }
 
             if (isset($data['content'])) {
                 $this->comments($data['content'], $opportunity->id, $opportunity->client_id, 'order');
@@ -105,53 +107,6 @@ class OpportunityService
         }
     }
 
-
-//    public function items_opportunity($data, $opportunity): void
-//    {
-//
-//        $item = ItemOpportunity::where('opportunity_id', $opportunity)->get();
-//        $dataResult = (array)$data;
-//
-//        $results = array_map(function ($prod) {
-//            return ['id' => $prod['id'], 'product_id' => $prod['product_id'], 'qty' => $prod['qty'], 'order_type_id' => $prod['order_type_id'], 'number' => $prod['number'], 'price' => $prod['price'], 'factor' => $prod['factor']];
-//        }, $item->toArray());
-//
-//        foreach ($data as $df) {
-//            if (count($data) > count($results)) {
-//                ItemOpportunity::where(['opportunity_id' => $opportunity])->updateOrCreate([
-//                    'tenant_id' => auth()->user()->tenant->id,
-//                    'opportunity_id' => $opportunity,
-//                    'product_id' => $df['product_id'],
-//                    'order_type_id' => $df['order_type_id'],
-//                    'number' => $df['number'],
-//                    'qty' => $df['qty'],
-//                    'price' => $df['price'],
-//                    'factor' => $df['factor']
-//                ]);
-//
-//            } else {
-//                ItemOpportunity::where(['id' => $df['id'], 'opportunity_id' => $opportunity])->update([
-//                    'tenant_id' => auth()->user()->tenant->id,
-//                    'opportunity_id' => $opportunity,
-//                    'product_id' => $df['product_id'],
-//                    'order_type_id' => $df['order_type_id'],
-//                    'number' => $df['number'],
-//                    'qty' => $df['qty'],
-//                    'price' => $df['price'],
-//                    'factor' => $df['factor']
-//                ]);
-//            }
-//        }
-//
-//
-//        $idResults = array_column($results, 'id');
-//        $idRes = array_column($dataResult, 'id');
-//        $id = array_diff($idResults, $idRes);
-//        if (count($data) < count($results)) {
-//            ItemOpportunity::where(['id' => $id])->delete();
-//        }
-//    }
-
     private function getAllItems(): array
     {
         // Pegue todos os itens da sessão, filtrados ou não
@@ -165,46 +120,106 @@ class OpportunityService
         return $allItems;
     }
 
-
-    public function items_opportunity($data, $opportunityId): void
+    public function items_opportunity($data, $opportunity): void
     {
-        // Certifique-se de que $data é um array
-        if (is_string($data)) {
-            $data = json_decode($data, true);
-        }
 
-        $existingItems = ItemOpportunity::where('opportunity_id', $opportunityId)->get();
-        $dataArray = is_array($data) ? $data : $data->toArray();
+        $item = ItemOpportunity::where('opportunity_id', $opportunity)->get();
+        $dataResult = (array)$data;
 
-        // Atualizar ou criar itens
-        foreach ($dataArray as $df) {
-            ItemOpportunity::updateOrCreate(
-                [
-                    'id' => $df['id'] ?? null,
-                    'opportunity_id' => $opportunityId
-                ],
-                [
+        $results = array_map(function ($prod) {
+            return ['id' => $prod['id'], 'product_id' => $prod['product_id'], 'qty' => $prod['qty'], 'order_type_id' => $prod['order_type_id'], 'number' => $prod['number'], 'price' => $prod['price'], 'factor' => $prod['factor']];
+        }, $item->toArray());
+
+        foreach ($data as $df) {
+            if (count($data) > count($results)) {
+                ItemOpportunity::where(['opportunity_id' => $opportunity])->updateOrCreate([
                     'tenant_id' => auth()->user()->tenant->id,
-                    'opportunity_id' => $opportunityId,
+                    'opportunity_id' => $opportunity,
                     'product_id' => $df['product_id'],
                     'order_type_id' => $df['order_type_id'],
                     'number' => $df['number'],
                     'qty' => $df['qty'],
                     'price' => $df['price'],
                     'factor' => $df['factor']
-                ]
-            );
+                ]);
+
+            } else {
+                ItemOpportunity::where(['id' => $df['id'], 'opportunity_id' => $opportunity])->update([
+                    'tenant_id' => auth()->user()->tenant->id,
+                    'opportunity_id' => $opportunity,
+                    'product_id' => $df['product_id'],
+                    'order_type_id' => $df['order_type_id'],
+                    'number' => $df['number'],
+                    'qty' => $df['qty'],
+                    'price' => $df['price'],
+                    'factor' => $df['factor']
+                ]);
+            }
         }
 
-        // Deletar itens que não estão mais presentes nos novos dados
-        $newIds = array_column($dataArray, 'id');
-        $existingIds = $existingItems->pluck('id')->all();
-        $idsToDelete = array_diff($existingIds, $newIds);
 
-        if (!empty($idsToDelete)) {
-            ItemOpportunity::whereIn('id', $idsToDelete)->delete();
+        $idResults = array_column($results, 'id');
+        $idRes = array_column($dataResult, 'id');
+        $id = array_diff($idResults, $idRes);
+        if (count($data) < count($results)) {
+            ItemOpportunity::where(['id' => $id])->delete();
         }
     }
+
+
+
+
+//    public function items_opportunity($data, $opportunity): void
+//    {
+//        // Pegue os itens existentes da oportunidade
+//        $existingItems = ItemOpportunity::where('opportunity_id', $opportunity)->get()->keyBy('id')->toArray();
+//
+//        foreach ($data as $item) {
+//            if (isset($item['id'])) {
+//            // Verifique se o item existe e se foi modificado
+//            if (isset($existingItems[$item['id']])) {
+//                $existingItem = $existingItems[$item['id']];
+//                // Verifique se o item foi modificado
+//                if (
+//                    $existingItem['product_id'] != $item['product_id'] ||
+//                    $existingItem['order_type_id'] != $item['order_type_id'] ||
+//                    $existingItem['number'] != $item['number'] ||
+//                    $existingItem['qty'] != $item['qty'] ||
+//                    $existingItem['price'] != $item['price'] ||
+//                    $existingItem['factor'] != $item['factor']
+//                ) {
+//                    // Atualize o item se ele foi modificado
+//                    ItemOpportunity::where('id', $item['id'])->update([
+//                        'tenant_id' => auth()->user()->tenant->id,
+//                        'product_id' => $item['product_id'],
+//                        'order_type_id' => $item['order_type_id'],
+//                        'number' => $item['number'],
+//                        'qty' => $item['qty'],
+//                        'price' => $item['price'],
+//                        'factor' => $item['factor']
+//                    ]);
+//                }
+//            }
+//            } else {
+//                // Crie o item se ele não existe
+//                ItemOpportunity::create([
+//                    'tenant_id' => auth()->user()->tenant->id,
+//                    'opportunity_id' => $opportunity,
+//                    'product_id' => $item['product_id'],
+//                    'order_type_id' => $item['order_type_id'],
+//                    'number' => $item['number'],
+//                    'qty' => $item['qty'],
+//                    'price' => $item['price'],
+//                    'factor' => $item['factor']
+//                ]);
+//            }
+//        }
+//
+//        // Delete os itens que não estão nos novos dados
+//        $newItemIds = array_column($data, 'id');
+//        ItemOpportunity::where('opportunity_id', $opportunity)->whereNotIn('id', $newItemIds)->delete();
+//    }
+
 
 
 
