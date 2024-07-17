@@ -110,7 +110,7 @@ class Table extends Component
     public function loadComments($id)
     {
         $this->opportunity = Opportunity::with('client')->find($id);
-        $this->comments = Opportunity::find($id)->comments;
+        $this->comments = $this->opportunity->comments;
     }
 
 
