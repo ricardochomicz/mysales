@@ -19,14 +19,14 @@ class OpportunityService
             $opportunities->where('tenant_id', auth()->user()->tenant->id)
                 ->where('send_order',0)
                 ->where('type', 'opportunity')
-                ->orderBy('updated_at', 'asc')
+                ->orderBy('probability', 'desc')
                 ->filter($data);
         }else{
             $opportunities->where('tenant_id', auth()->user()->tenant->id)
                 ->where('user_id', auth()->user()->id)
                 ->where('send_order',0)
                 ->where('type', 'opportunity')
-                ->orderBy('updated_at', 'asc')
+                ->orderBy('probability', 'desc')
                 ->filter($data);
         }
         return $opportunities->paginate();
