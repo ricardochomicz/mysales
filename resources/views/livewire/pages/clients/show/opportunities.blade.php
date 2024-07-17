@@ -12,7 +12,7 @@
         </thead>
         <tbody>
 
-        @foreach($clients->orders->sortBy('updated_at') as $order)
+        @foreach($orders as $order)
             <tr>
                 <td>
                     {{$order->identify}}<br>
@@ -63,4 +63,7 @@
         @endforeach
         </tbody>
     </table>
+    <div class="d-flex justify-content-center pagination-sm">
+        {!!  $orders->links('vendor.pagination.bootstrap-4') !!}
+    </div>
 </div>

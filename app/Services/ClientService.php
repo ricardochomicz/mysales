@@ -19,6 +19,26 @@ class ClientService extends BaseService
         return $data;
     }
 
+    public function get($id, $withTrashed = false)
+    {
+        $user = auth()->user();
+        $tenantId = $user->tenant->id;
+        $userId = $user->id;
+        $roles = $user->roles->pluck('id')->toArray();
+
+        $query = Client::where('tenant_id', $tenantId);
+
+        if (!in_array(2, $roles) && !in_array(3, $roles)) {
+            $query->where('user_id', $userId);
+        }
+
+        if ($withTrashed) {
+            $query->withTrashed();
+        }
+
+        return $query->find($id);
+    }
+
     protected function getQuery($filter)
     {
         if (in_array([2,3], auth()->user()->roles->pluck('id')->toArray())){

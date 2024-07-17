@@ -63,7 +63,12 @@ class ProtocolService
 
     public function get($id)
     {
-        return Protocol::where('tenant_id', auth()->user()->tenant->id)->find($id);
+        if (in_array([1, 2, 3], auth()->user()->roles->pluck('id')->toArray())) {
+            return Protocol::where('tenant_id', auth()->user()->tenant->id)->find($id);
+        }else{
+            return Protocol::where('tenant_id', auth()->user()->tenant->id)->where('user_id', auth()->user()->id)->find($id);
+        }
+
     }
 
     public function update($data,$id)

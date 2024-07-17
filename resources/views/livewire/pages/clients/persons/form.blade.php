@@ -1,5 +1,6 @@
 <div class="mt-3">
-    <button wire:click="$toggle('showModal')" data-toggle="modal" data-target="#personForm" class="btn btn-primary">Novo Contato
+    <button wire:click="$toggle('showModal')" data-toggle="modal" data-target="#personForm" class="btn btn-primary">Novo
+        Contato
     </button>
     <table class="table mt-4">
         <thead>
@@ -21,7 +22,11 @@
                 <td class="align-middle">{{ $person->email }}</td>
                 <td class="text-center align-middle">{{ $person->phone }}</td>
                 <td class="align-middle">{{ $person->office }}</td>
-                <td class="align-middle">{{ \Carbon\Carbon::parse($person->birthday)->format('d/m/Y') }}</td>
+                <td class="align-middle">
+                    @if($person->birthday)
+                        {{ \Carbon\Carbon::parse($person->birthday)->format('d/m/Y') }}
+                    @endif
+                </td>
                 <td class="text-center align-middle">
                     <button wire:click="edit({{ $person->id }})" data-toggle="modal" data-target="#personForm"
                             class="btn btn-sm btn-primary">
@@ -86,7 +91,7 @@
                             </div>
                             <div class="form-group col-sm-6">
                                 <label for="phone" class="form-label">Telefone:</label>
-                                <input wire:model="phone" id="phone" class="form-control" />
+                                <input wire:model="phone" id="phone" class="form-control"/>
                             </div>
                         </div>
                         <div class="row">

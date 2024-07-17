@@ -42,6 +42,11 @@ class Client extends Model
         return $this->hasMany(Opportunity::class);
     }
 
+    public function protocols(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Protocol::class);
+    }
+
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);

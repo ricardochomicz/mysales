@@ -98,7 +98,7 @@
                         <div class="col-12 table-responsive">
                             <h5 class="mt-3">Protocolos</h5>
 
-                            Protocolos cliente aqui
+                            <livewire:pages.clients.show.protocols :client="$client->id" />
 
                         </div>
                     </div>
@@ -129,6 +129,37 @@
                 });
             }
         });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var triggerTabList = [].slice.call(document.querySelectorAll('#myTab button'))
+            triggerTabList.forEach(function (triggerEl) {
+                var tabTrigger = new bootstrap.Tab(triggerEl)
+
+                triggerEl.addEventListener('click', function (event) {
+                    event.preventDefault()
+                    tabTrigger.show()
+                    localStorage.setItem('activeTab', triggerEl.id)
+                })
+            })
+
+            var activeTab = localStorage.getItem('activeTab')
+            if (activeTab) {
+                var someTabTriggerEl = document.getElementById(activeTab)
+                var tab = new bootstrap.Tab(someTabTriggerEl)
+                tab.show()
+            }
+        });
+
+        // Adicionar listener Livewire para preservar a aba ativa durante a navegação
+        document.addEventListener("livewire:load", function(event) {
+            var activeTab = localStorage.getItem('activeTab');
+            if (activeTab) {
+                var someTabTriggerEl = document.getElementById(activeTab);
+                var tab = new bootstrap.Tab(someTabTriggerEl);
+                tab.show();
+            }
+        });
+
 
 
 

@@ -3,6 +3,7 @@
 namespace App\Livewire\Pages\Clients\Show;
 
 use App\Models\Client;
+use App\Services\ClientService;
 use Livewire\Component;
 
 class Opportunities extends Component
@@ -22,9 +23,12 @@ class Opportunities extends Component
 
     public function render()
     {
+        $clientService = new ClientService();
+        $client = $clientService->get($this->client);
+        $orders = $client->orders()->orderBy('updated_at')->paginate();
         return view('livewire.pages.clients.show.opportunities',[
-            'clients' => Client::with(['user', 'operator', 'orders'])
-                ->where(['tenant_id' => auth()->user()->tenant->id])->find($this->client)
+            'clients' =>$client,
+            'orders' => $orders
         ]);
     }
 
