@@ -54,9 +54,9 @@ class ProductModal extends Component
         $this->order_types = $order_types->toSelect();
         $this->products = collect();
 
-        if (session()->has('items')) {
-            $this->items = session('items');
-        }
+//        if (session()->has('items')) {
+//            $this->items = session('items');
+//        }
 
         $opportunity = new OpportunityService();
         if (request()->route('id')) {
@@ -281,6 +281,7 @@ class ProductModal extends Component
         $items = $items instanceof Collection ? $items : Collection::make($items);
 
         $path = Request::path();
+        dd($path);
 
         if (str_contains($path, 'edit')) {
             $basePath = Str::beforeLast('./edit', $path);

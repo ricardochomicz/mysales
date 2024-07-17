@@ -51,7 +51,7 @@ class OpportunityService
                 $this->comments('Oportunidade criada', $opportunity->id, $opportunity->client_id, 'opportunity');
             }
 
-            session()->forget('items');
+
             DB::commit();
             return $opportunity;
 
@@ -90,7 +90,7 @@ class OpportunityService
                 $this->comments($data['content'], $opportunity->id, $opportunity->client_id, 'order');
             }
 
-            session()->forget('items');
+
             DB::commit();
             return true;
         } catch (\Throwable $e) {
