@@ -38,9 +38,10 @@
 
 
 <div style="border:1px solid #cccc; border-radius: 6px; padding: 5px">
+    <p><b>Consultor: </b> {{ $order->user->name }} - {{$order->user->phone}}</p>
     <p><b>Número Pedido: </b> {{ $order->identify }}</p>
     <p><b>Criado em: </b> {{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y') }} </p>
-    <p><b>Qtd linhas: </b> {{ $order->lines }} </p>
+    <p><b>Qtd linhas: </b> {{ $order->qty }} </p>
     <p><b>Total Pedido: </b> R$ {!! number_format($order->total, 2, ',', '.') !!} </p>
     <p><b>Data Ativação: </b> {{ Carbon\Carbon::parse($order->activate)->format('d/m/Y') }}</p>
 
@@ -52,7 +53,7 @@
             <th class="text-center">Linha</th>
             <th>Plano</th>
             <th class="text-center">Qtd</th>
-            <th class="text-center">Valor Unit</th>
+            <th class="text-center" align="center">Valor Unit</th>
             <th class="text-center">Valor Total</th>
         </tr>
         </thead>
@@ -63,7 +64,7 @@
                 <td class="text-center">{{$item->number}}</td>
                 <td>{{$item->product->name}}</td>
                 <td class="text-center">{{$item->qty}}</td>
-                <td class="text-center">R$ {!! number_format($item->price, 2, ',', '.') !!}</td>
+                <td class="text-center" align="center">R$ {!! number_format($item->price, 2, ',', '.') !!}</td>
                 <td class="text-center">R$ {{ $item->qty * $item->price }}</td>
             </tr>
         @endforeach
