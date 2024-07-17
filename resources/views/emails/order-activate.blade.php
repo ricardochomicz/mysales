@@ -33,7 +33,7 @@
 
 <h3>Olá, <b>{{$order->client->persons[0]->name}}.</b></h3>
 <p>
-    Seu pedido com a <b>{{ $order->operator->name }}</b> faturou :)
+    Seu pedido com a <b>{{ $order->operadora->name }}</b> faturou :)
 </p>
 
 
