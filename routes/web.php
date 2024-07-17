@@ -173,6 +173,8 @@ Route::group(['middleware' => 'auth', 'prefix' => 'app'], function () {
     Route::post('protocols', [\App\Http\Controllers\ProtocolController::class, 'store'])->name('protocols.store');
     Route::get('protocols', [\App\Http\Controllers\ProtocolController::class, 'index'])->name('protocols.index');
     Route::get('protocols/{id}', [\App\Http\Controllers\ProtocolController::class, 'destroy'])->name('protocols.destroy');
+
+    Route::get('commissions', [\App\Http\Controllers\CommissionController::class, 'index'])->name('commissions.index');
 });
 
 Route::get('plan/{slug}', [\App\Http\Controllers\SiteController::class, 'plan'])->name('plan.subscription');

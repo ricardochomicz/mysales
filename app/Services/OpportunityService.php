@@ -46,7 +46,9 @@ class OpportunityService
             $this->items_opportunity($data['dynamicFields'], $opportunity->id);
 
             if (isset($data['content'])) {
-                $this->comments($data['content'], $opportunity->id, $opportunity->client_id);
+                $this->comments($data['content'], $opportunity->id, $opportunity->client_id, 'opportunity');
+            }else{
+                $this->comments('Oportunidade criada', $opportunity->id, $opportunity->client_id, 'opportunity');
             }
 
             session()->forget('items');
@@ -85,9 +87,10 @@ class OpportunityService
             $this->items_opportunity($data['dynamicFields'], $opportunity->id);
 
             if (isset($data['content'])) {
-                $this->comments($data['content'], $opportunity->id, $opportunity->client_id);
+                $this->comments($data['content'], $opportunity->id, $opportunity->client_id, 'order');
             }
 
+            session()->forget('items');
             DB::commit();
             return true;
         } catch (\Throwable $e) {

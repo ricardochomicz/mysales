@@ -25,7 +25,7 @@ class OrderRequest extends FormRequest
             'activate' => 'nullable'
         ];
 
-        $status_id = $this->input('status_id'); // ou $this->get('status_id');
+        $status_id = $this->get('status_id'); // ou $this->get('status_id');
 
         if ($status_id == 3 || $status_id == 4) {
             $rules['activate'] = 'required';

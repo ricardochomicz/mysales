@@ -79,7 +79,7 @@
                                 <td class="text-center">
                                     {{$d->ordem->name}}<br><small>{{$d->operadora->name}}</small>
                                 </td>
-                                <td class="text-center">R$ {{number_format($d->total, 2, ',', '.')}}</td>
+                                <td class="text-center">R$ {{number_format($d->total, 2, ',', '.')}}<br>{{( $d->qty )}}</td>
                                 <td class="text-center">
                                     @switch($d->funnel)
                                         @case('prospect')

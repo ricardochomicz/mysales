@@ -39,7 +39,7 @@
                 @if(isset($items))
                     @foreach($items->items_opportunity as $item)
                         <tr>
-                            <th class="align-middle"><small>{{@$item->type}}</small></th>
+                            <th class="align-middle"><small>{{@$item->type->name}}</small></th>
                             <th class="text-center align-middle"><small>{{$item->number}}</small></th>
                             <th class="align-middle"><small>{{$item->product->name}}</small></th>
                             <td class="text-center align-middle"><small>R$ {{number_format($item->price, 2, ',','.')}}<br>( {{$item->qty}} )</small></td>
