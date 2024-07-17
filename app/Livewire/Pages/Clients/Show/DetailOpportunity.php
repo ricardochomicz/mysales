@@ -3,25 +3,39 @@
 namespace App\Livewire\Pages\Clients\Show;
 
 use App\Models\Opportunity;
+use App\Services\OpportunityService;
 use Livewire\Component;
 
 class DetailOpportunity extends Component
 {
-    public $orderId;
+    public $orderId = null;
+    public $opportunities;
+    public $opportunity;
 
     protected $listeners = ['orderIdSelected'];
+
+    public function mount()
+    {
+        $this->opportunities = collect(); // Inicializa com uma coleção vazia
+    }
 
     public function orderIdSelected($orderId)
     {
         $this->orderId = $orderId;
-        // Aqui você pode fazer qualquer coisa com $orderId, como carregar dados relacionados ao pedido
+
+        if ($this->orderId) {
+            $opportunityService = new OpportunityService();
+            $this->opportunity = $opportunityService->get($this->orderId);
+            $this->opportunities = $this->opportunity->items_opportunity;
+        }
     }
 
 
     public function render()
     {
-        return view('livewire.pages.clients.show.detail-opportunity',[
-            'items' => Opportunity::with(['items_opportunity', 'ordem', 'operadora', 'client'])->find($this->orderId)
+        return view('livewire.pages.clients.show.detail-opportunity', [
+            'opportunity' => $this->opportunity,
+            'items' => $this->opportunities
         ]);
     }
 

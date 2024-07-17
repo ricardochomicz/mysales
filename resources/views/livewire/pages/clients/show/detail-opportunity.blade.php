@@ -9,13 +9,13 @@
         <div class="bs-canvas-content px-1">
             <div class="invoice-col p-2">
                 <address>
-                    <strong>{{@$items->client->name}}</strong><br/>
-                    <b>{{@$items->operadora->name}} - {{@$items->ordem->name}}</b><br/>
-                    Criado em: <b>{{\Carbon\Carbon::parse(@$items->created_at)->format('d/m/Y')}}</b><br/>
-                    Qtd Linhas: <b>{{@$items->qty}}</b><br/>
-                    Receita: <b>R$ {{number_format(@$items->total, 2, ',', '.')}}</b><br>
-                    @if(@$items->activate)
-                        Ativação: <b>{{\Carbon\Carbon::parse(@$items->activate)->format('d/m/Y')}}</b>
+                    <strong>{{@$opportunity->client->name}}</strong><br/>
+                    <b>{{@$opportunity->operadora->name}} - {{@$opportunity->ordem->name}}</b><br/>
+                    Criado em: <b>{{\Carbon\Carbon::parse(@$opportunity->created_at)->format('d/m/Y')}}</b><br/>
+                    Qtd Linhas: <b>{{@$opportunity->qty}}</b><br/>
+                    Receita: <b>R$ {{number_format(@$opportunity->total, 2, ',', '.')}}</b><br>
+                    @if(@$opportunity->activate)
+                        Ativação: <b>{{\Carbon\Carbon::parse(@$opportunity->activate)->format('d/m/Y')}}</b>
                     @endif
                 </address>
             </div>
@@ -32,7 +32,7 @@
                     <tbody>
 
                     @if(isset($items))
-                        @foreach($items->items_opportunity as $item)
+                        @foreach($items as $item)
                             <tr>
                                 <th class="align-middle"><small>{{@$item->type->name}}</small></th>
                                 <th class="text-center align-middle"><small>{{$item->number}}</small></th>
@@ -46,17 +46,19 @@
 
                     </tbody>
                 </table>
+                <div class="d-flex justify-content-center pagination-sm">
+{{--                    @if ($items instanceof \Illuminate\Pagination\LengthAwarePaginator)--}}
+{{--                        {!!  $items->links('vendor.pagination.bootstrap-4') !!}--}}
+{{--                    @endif--}}
+                </div>
             </div>
             <p class="text-muted small">Enviar Proposta</p>
-            <div class="input-group flex-nowrap">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="addon-wrapping">@</span>
-                </div>
-                <input type="text" class="form-control" placeholder="Email" aria-label="Username"
-                       aria-describedby="addon-wrapping">
-            </div>
+            @php
+                $message = urlencode("Segue proposta " . (@$opportunity->operadora->name ?? '')  . " EMPRESAS: \nhttps://mysales.42telecom.com.br/my-proposal/" . @$opportunity->uuid);
+            @endphp
             <p class="text-right mt-3 mb-0">
-                <button type="button" class="btn btn-outline-dark">Enviar</button>
+                <a href="https://wa.me/55{{ @$opportunity->client->persons[0]->phone }}?text={{ $message }}"
+                   target="_blank" class="btn btn-outline-dark">Enviar WhatsApp</a>
             </p>
         </div>
     </div>
@@ -82,6 +84,8 @@
                 return false;
             });
         });
+
+
     </script>
 @endpush
 

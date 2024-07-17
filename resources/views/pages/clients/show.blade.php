@@ -63,7 +63,7 @@
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="order" data-toggle="tab" data-target="#order-tab-pane"
-                                type="button" role="tab" aria-controls="order-tab-pane" aria-selected="true">Pedidos
+                                type="button" role="tab" aria-controls="order-tab-pane" aria-selected="true">Oportunidades/Pedidos
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
