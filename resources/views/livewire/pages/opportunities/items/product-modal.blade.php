@@ -71,13 +71,13 @@
 
                     <div class="row">
                         <div class="form-group col-sm-12">
-                            <x-input wire:model="number" label="Número Linha"/>
-                            <small>Para inserir vários números acrescente vírgula.</small>
+                            <x-text-area wire:model="number" label="Número Linha" data-role="tagsinput"></x-text-area>
+                            <small>Para inserir vários números acrescente <b>vírgula</b>.</small>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" wire:click="addItem" class="btn btn-primary">Salvar</button>
+                    <button type="button" wire:click.prevent="addItem" class="btn btn-primary">Salvar</button>
 
                     <button type="button" class="btn btn-secondary" wire:click="$dispatch('closeModal')">Fechar
                     </button>
