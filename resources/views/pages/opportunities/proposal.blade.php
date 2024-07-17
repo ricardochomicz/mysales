@@ -56,8 +56,9 @@
                     </thead>
                     <tbody>
 
-                    @foreach($opportunity->items_opportunity as $item)
+                    @foreach($items as $item)
                     <tr>
+                        1
                         <td>{{$item->type->name}}</td>
                         <td>{{$item->number}}</td>
                         <td>{{$item->product->name}}</td>

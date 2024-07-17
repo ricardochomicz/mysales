@@ -45,7 +45,7 @@ class OpportunityService
 
             $this->items_opportunity($data['dynamicFields'], $opportunity->id);
 
-            if (isset($data['content'])) {
+            if (!empty($data['content'])) {
                 $this->comments($data['content'], $opportunity->id, $opportunity->client_id, 'opportunity');
             }else{
                 $this->comments('Oportunidade criada', $opportunity->id, $opportunity->client_id, 'opportunity');

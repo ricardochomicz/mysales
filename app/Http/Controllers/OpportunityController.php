@@ -142,7 +142,7 @@ class OpportunityController extends Controller
         $opportunity = Opportunity::with(['client', 'client.persons', 'items_opportunity', 'operadora', 'ordem', 'user'])->where('uuid', $uuid)->first();
         $view = [
             'opportunity' => $opportunity,
-            'items' => ItemOpportunity::with(['product', 'type'])->where('opportunity_id', $opportunity->id)->get()
+            'items' => ItemOpportunity::where('opportunity_id', $opportunity->id)->get()
         ];
 
         return view('pages.opportunities.proposal', $view);

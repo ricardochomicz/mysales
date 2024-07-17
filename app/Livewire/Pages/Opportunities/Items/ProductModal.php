@@ -70,7 +70,7 @@ class ProductModal extends Component
             $this->totalQty = $totals['totalQty'];
             $this->totalValue = $totals['totalValue'];
         }else{
-            $this->items = session('items');
+//            $this->items = session('items');
             $this->filteredItems = $this->items;
         }
     }
@@ -160,7 +160,7 @@ class ProductModal extends Component
 
         }
 
-        session(['items' => $this->items]);
+//        session(['items' => $this->items]);
 
         $this->calculateTotals();
 
@@ -310,6 +310,7 @@ class ProductModal extends Component
             'totalQty' => $totals['totalQty'],
             'totalValue' => $totals['totalValue'],
             'data' => $this->paginate($this->filteredItems),
+//            'data' => $this->filteredItems,
         ]);
     }
 

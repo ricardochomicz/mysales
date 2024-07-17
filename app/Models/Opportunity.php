@@ -76,10 +76,10 @@ class Opportunity extends Model
             ->withPivot('qty', 'price');
     }
 
-    public function getItemsPaginationAttribute()
-    {
-        return $this->items_opportunity()->paginate(2);
-    }
+//    public function getItemsPaginationAttribute()
+//    {
+//        return $this->items_opportunity()->paginate(2);
+//    }
 
     public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
