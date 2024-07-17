@@ -70,7 +70,7 @@ class ProductModal extends Component
             $this->totalQty = $totals['totalQty'];
             $this->totalValue = $totals['totalValue'];
         }else{
-//            $this->items = session('items');
+            $this->items = session('items');
             $this->filteredItems = $this->items;
         }
     }
@@ -160,7 +160,7 @@ class ProductModal extends Component
 
         }
 
-//        session(['items' => $this->items]);
+        session(['items' => $this->items]);
 
         $this->calculateTotals();
 
@@ -275,7 +275,7 @@ class ProductModal extends Component
     }
 
 
-    private function paginate($items, $perPage = 20, $page = null, $options = []): LengthAwarePaginator
+    private function paginate($items, $perPage = 2, $page = null, $options = []): LengthAwarePaginator
     {
         $page = $page ?: LengthAwarePaginator::resolveCurrentPage() ?: 1;
         $items = $items instanceof Collection ? $items : Collection::make($items);

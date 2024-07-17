@@ -12,19 +12,27 @@ use Livewire\WithPagination;
 
 class Table extends Component
 {
+    #[Url(history: true)]
     public $search = '';
-    public $dt_ini = '';
-    public $dt_end = '';
+    #[Url(history: true)]
+    public $month = '';
+    #[Url(history: true)]
+    public $operator = '';
     public $groupBy = 'groupBy';
     public $commissions = [];
     public $items = [];
     public $totalAmount = 0;
 
+    protected function queryString(): array
+    {
+        return [
+            'search' => ['except' => ''],
+            'month' => ['except' => ''],
+            'operator' => ['except' => ''],
+        ];
+    }
     public function mount()
     {
-//        $this->search = $filters['search'] ?? '';
-//        $this->operator = $filters['operator'] ?? '';
-//        $this->date = $filters['date'] ?? '';
         $this->loadCommissions();
     }
 
@@ -36,14 +44,18 @@ class Table extends Component
     public function clearFilter()
     {
         $this->search = '';
-        $this->dt_ini = '';
-        $this->dt_end = '';
+        $this->month = '';
+        $this->operator = '';
+        $this->dispatch('resetSelectpicker');
+        $this->loadCommissions();
     }
 
     public function loadCommissions()
     {
         $filters = [
-            'search' => $this->search
+            'search' => $this->search,
+            'month' => $this->month,
+            'operator' => $this->operator,
         ];
         $items = [];
         $groupBy = $this->groupBy;
@@ -73,7 +85,7 @@ class Table extends Component
                             'client' => $item->client,
                             'product' => $item->product->name,
                             'type' => $item->type->name,
-                            'operator' => $item->operadora,
+
                             'qty' => 1,
                             'price' => $price,
                             'factor' => $factor,

@@ -156,20 +156,20 @@ class Opportunity extends Model
             });
         });
 
-//        $query->when($filters['operator'] ?? null, function ($query, $type) {
-//            $query->where('operator_id', $type);
-//        });
+        $query->when($filters['operator'] ?? null, function ($query, $type) {
+            $query->where('operator', $type);
+        });
 //
-//        $query->when(!($filters['search'] || $filters['date'] || $filters['operator']), function ($query) use ($filters) {
-//            // Se não houver filtro de busca ou status, filtrar pelo mês atual
-//            $query->whereMonth('activate', '=', Carbon::now()->month);
-//        });
+        $query->when(!($filters['search'] || $filters['month'] || $filters['operator']), function ($query) use ($filters) {
+            // Se não houver filtro de busca ou status, filtrar pelo mês atual
+            $query->whereMonth('activate', '=', Carbon::now()->month);
+        });
 //
-//        $query->when($filters['date'], function ($query) use ($filters) {
-//            // Se datas de início e fim estão presentes, aplicar o filtro
-//            $query->whereYear('activate', '=', Carbon::parse($filters['date'])->format('Y'))
-//                ->whereMonth('activate', '=', Carbon::parse($filters['date'])->format('m'));
-//        });
+        $query->when($filters['month'], function ($query) use ($filters) {
+            // Se datas de início e fim estão presentes, aplicar o filtro
+            $query->whereYear('activate', '=', Carbon::parse($filters['month'])->format('Y'))
+                ->whereMonth('activate', '=', Carbon::parse($filters['month'])->format('m'));
+        });
     }
 
 
