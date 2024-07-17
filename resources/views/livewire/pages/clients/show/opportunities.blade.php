@@ -6,7 +6,7 @@
             <th class="text-center">Tipo</th>
             <th class="text-center">Receita</th>
             <th class="text-center">Ativação</th>
-            <th class="text-center">Próx. Renovação</th>
+            <th class="text-center">Tempo Contrato(M)</th>
             <th class="text-center">...</th>
         </tr>
         </thead>
@@ -42,7 +42,7 @@
                 </td>
                 <td class="text-center">
                     @if($order->activate)
-                        {{\Carbon\Carbon::parse($order->renew_date)->format('d/m/Y')}}
+                        {{floor(\Carbon\Carbon::now()->diffInMonths(\Carbon\Carbon::parse($order->activate))+1)}}
                     @else
                         -
                     @endif

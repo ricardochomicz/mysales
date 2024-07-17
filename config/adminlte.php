@@ -332,7 +332,7 @@ return [
                 [
                     'text' => 'Comissão',
                     'url' => 'app/commissions',
-                    'icon' => 'fas fa-fw fa-dollar mr-1',
+                    'icon' => 'fas fa-fw fa-file-invoice-dollar mr-1',
                 ],
                 [
                     'text' => 'Fator Comissão',
