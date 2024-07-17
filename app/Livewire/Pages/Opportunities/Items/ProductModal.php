@@ -283,8 +283,7 @@ class ProductModal extends Component
         $path = Request::path();
 
         if (str_contains($path, 'edit')) {
-            $basePath = Str::beforeLast('./edit', $path);
-            dd($basePath);
+            $basePath = Str::beforeLast('./edit',$path);
         }else{
             $basePath = Str::beforeLast('./create', $path);
         }
