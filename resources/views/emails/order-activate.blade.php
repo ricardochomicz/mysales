@@ -28,7 +28,7 @@
 
 </head>
 
-<body>
+<body style="font-family: 'Nunito', sans-serif">
 
 
 <h3>Olá, <b>{{$order->client->persons[0]->name}}.</b><br>
@@ -51,9 +51,9 @@
     <table class="table table-borderless">
         <thead>
         <tr>
-            <th>Tipo</th>
+            <th style="text-align: center">Tipo</th>
             <th class="text-center" style="text-align: center">Linha</th>
-            <th>Plano</th>
+            <th style="text-align: left">Plano</th>
             <th class="text-center" style="text-align: center">Qtd</th>
             <th class="text-center" style="text-align: center">Valor Unit</th>
             <th class="text-center" style="text-align: center">Valor Total</th>
@@ -62,12 +62,12 @@
         <tbody>
         @foreach($order->items_opportunity as $item)
             <tr>
-                <td>{{$item->type->name}}</td>
-                <td class="text-center" style="text-align: center">{{$item->number}}</td>
-                <td>{{$item->product->name}}</td>
+                <td style="text-align: center">{{$item->type->name}}</td>
+                <td class="text-center"  >{{$item->number}}</td>
+                <td style="text-align: left">{{$item->product->name}}</td>
                 <td class="text-center" style="text-align: center">{{$item->qty}}</td>
                 <td class="text-center" style="text-align: center">R$ {!! number_format($item->price, 2, ',', '.') !!}</td>
-                <td class="text-center" style="text-align: center">R$ {{ $item->qty * $item->price }}</td>
+                <td class="text-center" style="text-align: center">R$ {!! number_format($item->qty * $item->price, 2, ',', '.') !!}</td>
             </tr>
         @endforeach
         </tbody>
