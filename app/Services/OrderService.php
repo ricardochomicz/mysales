@@ -60,7 +60,7 @@ class OrderService
                 }
                 $order->update($data);
 
-                if ($order->client->persons[0]->email != '' && ($data['status_id'] === 3 || $data['status_id'] === 4)) {
+                if ($order->client->persons[0]->email != '' && ((int)$data['status_id'] === 3 || (int)$data['status_id'] === 4)) {
                     $order->client->update(['operator_id' => $order->operator]);
                     Mail::to(@$order->client->persons[0]->email)
                         ->cc('empresas.atendimento@gmail.com')
@@ -68,7 +68,6 @@ class OrderService
                 }
 
             }
-
 
             DB::commit();
             return true;

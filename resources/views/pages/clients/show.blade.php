@@ -131,9 +131,9 @@
         });
 
         document.addEventListener('DOMContentLoaded', function () {
-            var triggerTabList = [].slice.call(document.querySelectorAll('#myTab button'))
+            let triggerTabList = [].slice.call(document.querySelectorAll('#myTab button'))
             triggerTabList.forEach(function (triggerEl) {
-                var tabTrigger = new bootstrap.Tab(triggerEl)
+                let tabTrigger = new bootstrap.Tab(triggerEl)
 
                 triggerEl.addEventListener('click', function (event) {
                     event.preventDefault()
@@ -142,20 +142,25 @@
                 })
             })
 
-            var activeTab = localStorage.getItem('activeTab')
+            let activeTab = localStorage.getItem('activeTab')
             if (activeTab) {
-                var someTabTriggerEl = document.getElementById(activeTab)
-                var tab = new bootstrap.Tab(someTabTriggerEl)
+                let someTabTriggerEl = document.getElementById(activeTab)
+                let tab = new bootstrap.Tab(someTabTriggerEl)
                 tab.show()
             }
         });
 
+        // Limpar o localStorage quando a rota muda
+        window.addEventListener('popstate', function (event) {
+            localStorage.removeItem('activeTab');
+        });
+
         // Adicionar listener Livewire para preservar a aba ativa durante a navegação
         document.addEventListener("livewire:load", function(event) {
-            var activeTab = localStorage.getItem('activeTab');
+            let activeTab = localStorage.getItem('activeTab');
             if (activeTab) {
-                var someTabTriggerEl = document.getElementById(activeTab);
-                var tab = new bootstrap.Tab(someTabTriggerEl);
+                let someTabTriggerEl = document.getElementById(activeTab);
+                let tab = new bootstrap.Tab(someTabTriggerEl);
                 tab.show();
             }
         });
