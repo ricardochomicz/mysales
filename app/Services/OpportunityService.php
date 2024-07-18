@@ -93,8 +93,8 @@ class OpportunityService
                 $this->items_opportunity($allDynamicFields, $opportunity->id);
             }
 
-            if (isset($data['content'])) {
-                $this->comments($data['content'], $opportunity->id, $opportunity->client_id, 'order');
+            if (!empty($data['content'])) {
+                $this->comments($data['content'], $opportunity->id, $opportunity->client_id, 'opportunity');
             }
 
             session()->forget('items');
