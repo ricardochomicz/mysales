@@ -63,7 +63,7 @@ class Table extends Component
 
         $query = Opportunity::with(['client', 'operadora', 'items_opportunity.product', 'items_opportunity.type'])
             ->where(['tenant_id' => auth()->user()->tenant->id, 'send_order' => 1, 'renew' => 0])
-            ->whereIn('status_id', [3, 4])
+            ->whereIn('status_id', [3, 4, 8])
             ->whereIn('type', ['order', 'wallet'])
             ->whereNull('deleted_at')
             ->filterCommission($filters);

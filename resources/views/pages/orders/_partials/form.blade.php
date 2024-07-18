@@ -48,6 +48,10 @@
                             <x-switch label="Pedido Conferido" id="checked" value="1" name="checked"
                                       onchange="toggleInputs(this)" conteudo="{{ old('checked', @$data->checked) }}"/>
                         </div>
+                        <div class="form-group col-sm-6">
+                            <x-switch label="Enviar e-mail faturado" id="checked1" value="1" name="send_email"
+                                      checked/>
+                        </div>
                     @endcan
                     <x-input type="hidden" name="renew_date" id="renew_date"
                              value="{{old('renew_date') ?? @$data->renew_date}}"/>
