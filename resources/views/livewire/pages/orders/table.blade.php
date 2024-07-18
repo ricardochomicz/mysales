@@ -83,6 +83,9 @@
                                         @case(4)
                                             <span class='badge badge-success'>{{$d->status->name}}</span>
                                             @break
+                                        @default()
+                                            <span class='badge badge-secondary'>{{$d->status->name}}</span>
+                                            @break
                                     @endswitch
 
                                     <br>
