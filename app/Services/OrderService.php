@@ -67,7 +67,7 @@ class OrderService
 
                 $order->update($data);
 
-                if(isset($dados['send_email']) && $dados['send_email']){
+                if(isset($data['send_email']) && $data['send_email']){
                     if ($order->client->persons[0]->email != '' && ((int)$data['status_id'] === 3 || (int)$data['status_id'] === 4)) {
                         $order->client->update(['operator_id' => $order->operator]);
                         Mail::to(@$order->client->persons[0]->email)
