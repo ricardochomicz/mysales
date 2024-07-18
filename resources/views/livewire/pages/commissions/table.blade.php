@@ -19,8 +19,8 @@
             <div class="row">
                 <div class="col-sm-2" wire:ignore>
                     <select wire:model.change="groupBy" class="selectpicker">
-                        <option value="detail">Detalhado</option>
                         <option value="groupBy">Resumido</option>
+                        <option value="detail">Detalhado</option>
                     </select>
                 </div>
                 <div class="form-group col-sm-3 has-search">
@@ -45,7 +45,7 @@
 
                 <div class="table-responsive rounded">
 
-                    <table class="table table-borderless table-striped table-hover">
+                    <table class="table table-borderless table-striped table-hover" style="font-size: 0.938rem">
 
                         <thead class="bg-gray-light">
                         <tr>
@@ -66,15 +66,16 @@
                         @if ($groupBy === 'detail')
                             @foreach($commissions as $commission)
                                 @foreach($commission['items_opportunity'] as $item)
+
                                     <tr>
-                                        <td>{{ $commission['client']['name'] }}</td>
+                                        <td>{{ $commission['client']['name'] }}<br><small><b>#{{$item->opportunity->identify}}</b></small></td>
 
                                         <td class="text-center">{{ $item['type']['name'] }}</td>
                                         <td class="text-center">{{ $item['number'] }}</td>
                                         <td>{{ $item['product']['name'] }}</td>
                                         <td class="text-center">{{ $item['qty'] }}</td>
                                         <td class="text-center">R$ {{ number_format($item['price'], 2, ',', '.') }}</td>
-                                        <td class="text-center">{{ $item['factor'] }}</td>
+                                        <td class="text-center">{{ $item['factor'] }}%</td>
                                         <td>
                                             R$ {{ number_format($item['qty'] * $item['price'] * $item['factor'], 2, ',', '.') }}</td>
                                     </tr>
@@ -85,12 +86,12 @@
                             @foreach($items as $group)
                                 @foreach($group as $item)
                                     <tr>
-                                        <td>{{ $item['client'] }}</td>
+                                        <td>{{ $item['client'] }}<br><small><b>#{{$item['identify']}}</b></small></td>
                                         <td class="text-center">{{ $item['type'] }}<br>{{ $item['operator'] }}</td>
                                         <td>{{ $item['product'] }}</td>
                                         <td class="text-center">{{ $item['qty'] }}</td>
                                         <td class="text-center">R$ {{ number_format($item['price'], 2, ',', '.') }}</td>
-                                        <td class="text-center">{{ $item['factor'] }}</td>
+                                        <td class="text-center">{{ $item['factor'] }}%</td>
                                         <td class="text-center">R$ {{ number_format($item['amount'], 2, ',', '.') }}</td>
                                     </tr>
                                 @endforeach

@@ -82,6 +82,7 @@ class Table extends Component
 
                         return [
                             'id' => $item->id,
+                            'identify' => $item->opportunity,
                             'client' => $item->client,
                             'product' => $item->product->name,
                             'type' => $item->type->name,
@@ -97,20 +98,26 @@ class Table extends Component
                     $commissionItems = $commission->items_opportunity->groupBy('product_id')
                         ->map(function ($items) use (&$totalAmount, $commission) {
                             $groupedItems = [];
+
+                            $itemsByOrderType = $items->groupBy('order_type_id');
+                            foreach ($itemsByOrderType as $orderTypeItems) {
+
+
                             $totalQty = 0;
 
-                            foreach ($items as $item) {
+                            foreach ($orderTypeItems as $item) {
                                 $client = $commission->client;
                                 $operator = $commission->operadora;
                                 $qty = $item->qty;
                                 $totalQty += $qty;
                             }
 
-                            $firstItem = $items->first();
+                            $firstItem = $orderTypeItems->first();
 
                             $groupedItems[] = [
                                 'product_id' => $firstItem->product_id,
                                 'opportunity_id' => $firstItem->opportunity_id,
+                                'identify' => $firstItem->opportunity->identify,
                                 'client' => $client->name,
                                 'product' => $firstItem->product->name,
                                 'operator' => $operator->name,
@@ -121,7 +128,9 @@ class Table extends Component
                                 'amount' => $totalQty * $firstItem->factor * $firstItem->price,
                             ];
 
-                            $totalAmount += $groupedItems[0]['amount'];
+                                $totalAmount += $groupedItems[count($groupedItems) - 1]['amount'];
+
+                            }
 
                             return $groupedItems;
                         })->toArray();
