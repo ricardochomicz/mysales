@@ -33,6 +33,17 @@ class TagService extends BaseService
             ->get(['id', 'name']);
     }
 
+    public function getTagOrder($id)
+    {
+        return Tag::where(function ($query) {
+            $query->where('tenant_id', auth()->user()->tenant->id)
+                ->orWhereNull('tenant_id');
+        })
+            ->where('type', 'order')
+            ->orderBy('name')
+            ->find($id);
+    }
+
     protected function handleBeforeSave(array $data): array
     {
         $data['edit'] = true;

@@ -31,6 +31,7 @@ class OrderService
 
     public function update($data, $id)
     {
+        $tagService = new TagService();
 
         try {
             DB::beginTransaction();
@@ -50,6 +51,9 @@ class OrderService
                     $data['probability'] = 50;
                 }
 
+                $tag = $tagService->getTagOrder($data['status_id']);
+
+                $this->comments("Pedido Movimentado: $tag->name", $order->id, $order->client_id, 'order');
 
                 if ((int)$data['status_id'] === 3 || (int)$data['status_id'] === 4) {
                     $data['type'] = 'wallet';
@@ -59,6 +63,8 @@ class OrderService
                 } elseif ((int)$data['status_id'] === 7) {
                     $this->comments('Devolvido Consultor', $order->id, $order->client_id, 'order');
                 }
+
+
                 $order->update($data);
 
                 if ($order->client->persons[0]->email != '' && ((int)$data['status_id'] === 3 || (int)$data['status_id'] === 4)) {

@@ -31,19 +31,19 @@
 <body style="font-family: 'Verdana', sans-serif; font-size: 15px">
 
 
-<h3>Olá, <b>{{$order->client->persons[0]->name}}.</b><br>
+<h3 style="font-size: 15px">Olá, <b>{{$order->client->persons[0]->name}}.</b><br>
     {{$order->client->name}}
 </h3>
-<p>
-    Seu pedido com a <b>{{ $order->operadora->name }}</b> faturou :)
+<p style="font-size: 15px">
+    Seu pedido com a <b>{{ $order->operadora->name }}</b> foi concluído com sucesso.
 </p>
 
 
-<div style="border:1px solid #cccc; border-radius: 6px; padding: 5px">
+<div style="border:1px solid #cccc; border-radius: 6px; padding: 5px; font-size: 15px">
     <p><b>Consultor: </b> {{ $order->user->name }} - {{$order->user->phone}}</p>
     <p><b>Número Pedido: </b> {{ $order->identify }}</p>
     <p><b>Criado em: </b> {{ Carbon\Carbon::parse($order->created_at)->format('d/m/Y') }} </p>
-    <p><b>Qtd linhas: </b> {{ $order->qty }} </p>
+    <p><b>Qtd linhas/items: </b> {{ $order->qty }} </p>
     <p><b>Total Pedido: </b> R$ {!! number_format($order->total, 2, ',', '.') !!} </p>
     <p><b>Data Ativação: </b> {{ Carbon\Carbon::parse($order->activate)->format('d/m/Y') }}</p>
 
