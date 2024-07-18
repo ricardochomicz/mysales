@@ -50,6 +50,7 @@ class OrderService
                     $data['probability'] = 50;
                 }
 
+
                 if ((int)$data['status_id'] === 3 || (int)$data['status_id'] === 4) {
                     $data['type'] = 'wallet';
                     if($order->activate >= Carbon::now()){

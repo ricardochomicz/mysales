@@ -28,7 +28,7 @@
 
 </head>
 
-<body style="font-family: 'Nunito', sans-serif">
+<body style="font-family: 'Verdana', sans-serif; font-size: 15px">
 
 
 <h3>Olá, <b>{{$order->client->persons[0]->name}}.</b><br>
@@ -48,7 +48,7 @@
     <p><b>Data Ativação: </b> {{ Carbon\Carbon::parse($order->activate)->format('d/m/Y') }}</p>
 
 
-    <table class="table table-borderless">
+    <table class="table table-borderless" style="font-size: 15px">
         <thead>
         <tr>
             <th style="text-align: center">Tipo</th>

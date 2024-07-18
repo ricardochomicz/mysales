@@ -3,6 +3,7 @@
 namespace App\Livewire\Pages\Opportunities\Items;
 
 use App\Models\Factor;
+use App\Models\ItemOpportunity;
 use App\Models\Opportunity;
 use App\Models\Product;
 use App\Services\OperatorService;
@@ -11,7 +12,6 @@ use App\Services\OrderTypeService;
 use App\Services\ProductService;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
-use Illuminate\Contracts\View\View;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -45,6 +45,10 @@ class ProductModal extends Component
 
     public $page;
 
+    public $selectedItems = [];
+    public $selectAll = false;
+    public $bulkEditNumber;
+    public bool $isBulkEdit = false;
 
     public function mount()
     {
@@ -69,7 +73,7 @@ class ProductModal extends Component
             $totals = $this->calculateTotals();
             $this->totalQty = $totals['totalQty'];
             $this->totalValue = $totals['totalValue'];
-        }else{
+        } else {
             $this->items = session('items');
             $this->filteredItems = $this->items;
         }
@@ -123,6 +127,7 @@ class ProductModal extends Component
 
     public function addItem(): void
     {
+
         $factor = $this->updateFactors();
         $linesArray = $this->number ? explode(',', $this->number) : [null];
         $total = 0;
@@ -283,8 +288,8 @@ class ProductModal extends Component
         $path = Request::path();
 
         if (str_contains($path, 'edit')) {
-            $basePath = Str::beforeLast('./edit',$path);
-        }else{
+            $basePath = Str::beforeLast('./edit', $path);
+        } else {
             $basePath = Str::beforeLast('./create', $path);
         }
 
@@ -299,6 +304,43 @@ class ProductModal extends Component
         $paginator->withPath($basePath);
 
         return $paginator;
+    }
+
+    public function updatedSelectAll($value)
+    {
+        if ($value) {
+            $this->selectedItems = array_keys($this->items);
+        } else {
+            $this->selectedItems = [];
+        }
+    }
+
+    public function openBulkEditModal()
+    {
+        if (is_array($this->selectedItems) && count($this->selectedItems) > 1) {
+
+            $this->dispatch('openBulkEditModal', modalId: '#bulkEditModal');
+        }
+    }
+
+
+    public function updateSelectedItems()
+    {
+        foreach ($this->selectedItems as $index) {
+            $qty = is_numeric($this->qty) ? (int)$this->qty : 1;
+            $subtotal = $this->price * $qty;
+            $this->items[$index]['product_id'] = $this->product_id;
+            $this->items[$index]['operator'] = $this->operator;
+            $this->items[$index]['price'] = $this->price ?? 0;
+        }
+
+        $this->calculateTotals();
+
+        $this->filteredItems = $this->items;
+
+        session(['items' => $this->items]);
+
+        $this->dispatch('closeModal', modalId: '#bulkEditModal');
     }
 
 

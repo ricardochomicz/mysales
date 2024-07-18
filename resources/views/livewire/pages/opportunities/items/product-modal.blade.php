@@ -86,14 +86,77 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal de Edição em Massa Simplificada -->
+    <div wire:ignore.self class="modal fade" id="bulkEditModal" role="dialog" aria-labelledby="bulkEditModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar Produtos Selecionados</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" wire:click="closeModal">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="operator_id">Operadora</label>
+                        <select id="operator_id" class="form-control" wire:model.change="operator">
+                            <option value="">Selecione</option>
+                            @foreach($operators as $o)
+                                <option value="{{$o->id}}">{{$o->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="operator_id">Produto</label>
+                        <input type="search" class="form-control" placeholder="Buscar Produto"
+                               wire:model.live="productSearch" id="product-search">
+                        @if($products->isNotEmpty())
+                            <ul id="product-list" class="list-group mt-2">
+                                @foreach($products as $product)
+                                    <li class="list-group-item list-group-item-action" style="cursor:pointer"
+                                        aria-current="true"
+                                        wire:click="selectProduct({{ $product->id }})">
+                                        <div class="d-flex w-100 justify-content-between">
+                                                <span class="mb-1">
+                                                    {{$product->name}}
+                                                </span>
+                                            <span>{{$product->price}}</span>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    </div>
+
+                    <div class="form-group">
+                        <x-input label="Valor" wire:model="price"/>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" wire:click="updateSelectedItems">Salvar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" wire:click="closeModal">Fechar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
     <div class="">
-
         <input type="hidden" name="total" value="{{$totalValue}}">
-
-
         <button type="button" wire:click="openModal"
                 class="btn btn-sm btn-primary mt-3 tooltips" data-text="Adicionar Produto">
             <i class="fas fa-plus"></i>
+        </button>
+        <button type="button" wire:click="openBulkEditModal" @if($isBulkEdit) disabled @endif class="btn btn-sm btn-primary mt-3 tooltips" data-text="Editar em Massa">
+            Editar em Massa
         </button>
 
         {{--            <button type="button" class="btn btn-sm btn-danger" wire:click="clearItems">--}}
@@ -108,6 +171,7 @@
             <table class="table caption-top">
                 <thead>
                 <tr>
+                    <th><input type="checkbox" wire:model="selectAll"></th>
                     <th>Nr. Linha</th>
                     <th>Plano</th>
                     <th>Valor Unit</th>
@@ -121,6 +185,7 @@
                         $subtotal = isset($item['subtotal']) ? $item['subtotal'] : $item['price'] * $item['qty'];
                     @endphp
                     <tr>
+                        <td><input type="checkbox" wire:model="selectedItems" value="{{ $index }}"></td>
                         <td>
                             <input type="hidden" name="dynamicFields[{{ $index }}][id]" value="{{$item['id'] ?? ''}}">
 
@@ -212,5 +277,14 @@
         Livewire.on('closeModal', () => {
             $('#itemForm').modal('hide');
         });
+
+        Livewire.on('openBulkEditModal', () => {
+            $('#bulkEditModal').modal('show');
+        });
+
+        Livewire.on('closeModal', () => {
+            $('#bulkEditModal').modal('hide');
+        });
+
     </script>
 @endpushonce
