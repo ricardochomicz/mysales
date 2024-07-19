@@ -47,7 +47,7 @@
                                 <td>
                                     {{$d->client->name}}<br><small>{{$d->client->document}}
                                         @if(Carbon\Carbon::now()->gt(Carbon\Carbon::parse($d->renew_date)))
-                                            <b class="text-danger font-italic">(APTO À RENOVAÇÃO)</b>
+                                            <mark class="text-danger font-italic">(APTO À RENOVAÇÃO)</mark>
                                         @endif
                                     </small>
                                 </td>
