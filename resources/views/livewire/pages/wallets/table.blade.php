@@ -33,7 +33,6 @@
                         <tr>
                             <th>#</th>
                             <th>Cliente</th>
-                            <th class="text-center">Tipo</th>
                             <th class="text-center">Total</th>
                             <th class="text-center">Classificação</th>
                             <th class="text-center">Ativação</th>
@@ -49,9 +48,6 @@
                                 <td>{{$d->id}}</td>
                                 <td>
                                     {{$d->client->name}}<br><small>{{$d->client->document}}</small>
-                                </td>
-                                <td class="text-center">
-                                    {{$d->ordem->name}}<br><small>{{$d->operadora->name}}</small>
                                 </td>
                                 <td class="text-center">
                                     R$ {{number_format($d->total, 2, ',', '.')}}<br>
