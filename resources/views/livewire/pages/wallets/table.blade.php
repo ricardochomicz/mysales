@@ -31,7 +31,6 @@
                         <caption><small>Clientes na Carteira <b>{{$data->count()}}</b></small></caption>
                         <thead class="bg-gray-light">
                         <tr>
-                            <th>#</th>
                             <th>Cliente</th>
                             <th class="text-center">Total</th>
                             <th class="text-center">Classificação</th>
@@ -45,7 +44,6 @@
 
                         @forelse($data as $d)
                             <tr>
-                                <td>{{$d->id}}</td>
                                 <td>
                                     {{$d->client->name}}<br><small>{{$d->client->document}}</small>
                                 </td>
