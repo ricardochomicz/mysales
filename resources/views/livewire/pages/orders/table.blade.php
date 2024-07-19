@@ -124,7 +124,7 @@
                         @endforelse
                         </tbody>
                     </table>
-                    <div class="d-flex justify-content-center">
+                    <div class="d-flex justify-content-center pagination-sm">
                         {!!  $data->links('vendor.pagination.bootstrap-4') !!}
                     </div>
                 </div>
