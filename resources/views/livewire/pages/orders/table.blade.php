@@ -54,14 +54,16 @@
 
                         @forelse($data as $d)
                             <tr>
-                                <td>
+                                <td class="align-middle">
                                     {{$d->client->name}}<br><small>{{$d->client->document}}</small>
                                 </td>
-                                <td class="text-center">
+                                <td class="text-center align-middle">
                                     {{$d->ordem->name}}<br><small>{{$d->operadora->name}}</small>
                                 </td>
-                                <td class="text-center">R$ {{number_format($d->total, 2, ',', '.')}}</td>
-                                <td class="text-center">
+                                <td class="text-center align-middle">R$ {{number_format($d->total, 2, ',', '.')}}<br>
+                                    {{( $d->qty )}}
+                                </td>
+                                <td class="text-center align-middle">
                                     @switch($d->status_id)
                                         @case(1)
                                             <span class='badge badge-primary'>{{$d->status->name}}</span>
@@ -93,7 +95,7 @@
                                     @endif
                                 </td>
 
-                                <td class="text-center">
+                                <td class="text-center align-middle">
                                     @if($d->activate)
                                         {{Carbon\Carbon::parse($d->activate)->format('d/m/Y')}}
                                     @else
@@ -102,7 +104,7 @@
 
                                 </td>
 
-                                <td class="text-center">
+                                <td class="text-center align-middle">
 
 
                                     <a href="{{route('orders.edit', $d->id)}}"
@@ -115,7 +117,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="text-center">
+                                <td colspan="6" class="text-center align-middle">
                                     Nenhum pedido cadastrado!
                                 </td>
                             </tr>
