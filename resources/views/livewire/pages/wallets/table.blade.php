@@ -49,7 +49,7 @@
                                 </td>
                                 <td class="text-center">
                                     R$ {{number_format($d->total, 2, ',', '.')}}<br>
-                                     ( {{$d->qty}} )
+                                      {{$d->qty}}
                                 </td>
                                 <td class="text-center">
                                     {{$d->client->classification->name}}<br>{{$d->client->classification->months}}

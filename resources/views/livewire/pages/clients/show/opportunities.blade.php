@@ -31,7 +31,7 @@
                 <td class="text-center">{{$order->ordem->name}}
                     <br><small>{{$order->operadora->name}}</small></td>
                 <td class="text-center">R$ {{number_format($order->total, 2, ',', '.')}}
-                    <br>( {{$order->qty}} )
+                    <br> {{$order->qty}}
                 </td>
                 <td class="text-center">
                     @if($order->activate)

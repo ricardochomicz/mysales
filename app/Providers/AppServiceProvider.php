@@ -10,6 +10,7 @@ use App\Observers\ClientObserver;
 use App\Observers\OpportunityObserver;
 use App\Observers\PlanObserver;
 use App\Observers\TenantObserver;
+use Illuminate\Support\Pluralizer;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

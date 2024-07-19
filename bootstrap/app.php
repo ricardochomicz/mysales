@@ -18,7 +18,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'check.manage.adm' => \App\Http\Middleware\CheckManageAdm::class,
             'check.manage.users' => \App\Http\Middleware\CheckManageUsers::class
         ]);
+
     })
+
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();
