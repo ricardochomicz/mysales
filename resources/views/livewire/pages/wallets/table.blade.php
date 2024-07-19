@@ -43,13 +43,17 @@
                         <tbody>
 
                         @forelse($data as $d)
-                            <tr>
+                            <tr class="{{ Carbon\Carbon::now()->gt(Carbon\Carbon::parse($d->renew_date)) ? 'text-danger' : '' }}">
                                 <td>
-                                    {{$d->client->name}}<br><small>{{$d->client->document}}</small>
+                                    {{$d->client->name}}<br><small>{{$d->client->document}}
+                                        @if(Carbon\Carbon::now()->gt(Carbon\Carbon::parse($d->renew_date)))
+                                            <b class="text-danger font-italic">(APTO À RENOVAÇÃO)</b>
+                                        @endif
+                                    </small>
                                 </td>
                                 <td class="text-center">
                                     R$ {{number_format($d->total, 2, ',', '.')}}<br>
-                                      {{$d->qty}}
+                                    {{$d->qty}}
                                 </td>
                                 <td class="text-center">
                                     {{$d->client->classification->name}}-{{$d->client->classification->months}}
@@ -68,7 +72,8 @@
                                 </td>
 
                                 <td class="text-center">
-                                    <a href="javascript:void(0)" onclick="ativaDesativa('{{route('wallets.clone',  $d->id)}}', 'renovar', '{{$d->client->name}}')"
+                                    <a href="javascript:void(0)"
+                                       onclick="ativaDesativa('{{route('wallets.clone',  $d->id)}}', 'renovar', '{{$d->client->name}}')"
                                        class="btn btn-primary btn-sm tooltips" data-text="Renovar Pedido">
                                         <i class="fas fa-sync-alt"></i>
                                     </a>
