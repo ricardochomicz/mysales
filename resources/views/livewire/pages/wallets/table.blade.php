@@ -26,7 +26,7 @@
                 <x-loader wire:loading.delay wire:loading.class="overlay"></x-loader>
 
                 <div class="table-responsive rounded">
-
+<div class="alert alert-warning text-center"><i class="fas fa-exclamation-circle"></i> Data renovação com base em <b>18 meses</b>. Verifique a classificação do cliente.</div>
                     <table class="table table-borderless table-striped table-hover">
                         <caption><small>Clientes na Carteira <b>{{$data->count()}}</b></small></caption>
                         <thead class="bg-gray-light">
@@ -47,7 +47,7 @@
                                 <td>
                                     {{$d->client->name}}<br><small>{{$d->client->document}}
                                         @if(Carbon\Carbon::now()->gt(Carbon\Carbon::parse($d->renew_date)))
-                                            <mark class="text-danger font-italic">(APTO À RENOVAÇÃO)</mark>
+                                            <mark class="text-danger font-italic font-weight-bold">( APTO À RENOVAÇÃO )</mark>
                                         @endif
                                     </small>
                                 </td>
