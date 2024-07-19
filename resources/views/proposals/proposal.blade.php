@@ -29,11 +29,11 @@
         <div class="row">
             <div class="col-12">
                 <h2 class="page-header">
-                    @if(@$opportunity->operator->name == 'CLARO')
+                    @if(@$opportunity->operadora->name == 'CLARO')
                         Proposta Comercial Claro Empresas
-                    @elseif(@$opportunity->operator->name == 'TIM')
+                    @elseif(@$opportunity->operadora->name == 'TIM')
                         Proposta Comercial Tim Empresas
-                    @elseif(@$opportunity->operator->name == 'VIVO')
+                    @elseif(@$opportunity->operadora->name == 'VIVO')
                         Proposta Comercial Vivo Empresas
                     @else
                         Proposta Comercial
