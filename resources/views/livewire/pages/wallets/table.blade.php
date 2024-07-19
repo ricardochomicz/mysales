@@ -10,10 +10,10 @@
                            placeholder="pesquisa por cliente...">
                 </div>
                 <div class="form-group col-sm-2">
-                    <x-input type="date" wire:model.lazy="dt_ini" class="tooltips" data-text="Data Início"/>
+                    <x-input type="date" wire:model.live.debounce.500ms="dt_ini" class="tooltips" data-text="Data Início"/>
                 </div>
                 <div class="form-group col-sm-2">
-                    <x-input type="date" wire:model.lazy="dt_end" class="tooltips" data-text="Data Fim"/>
+                    <x-input type="date" wire:model.live.debounce.500ms="dt_end" class="tooltips" data-text="Data Fim"/>
                 </div>
                 <div class="form-group col-sm-2">
                     <button type="button" class="btn btn-secondary" wire:click="clearFilter">Limpar Filtros</button>
@@ -36,7 +36,7 @@
                             <th class="text-center">Classificação</th>
                             <th class="text-center">Ativação</th>
                             <th class="text-center">Renovação</th>
-                            <th class="text-center">M</th>
+                            <th class="text-center tooltips" data-text="Meses Restantes"> MR</th>
                             <th class="text-center" width="5%">...</th>
                         </tr>
                         </thead>

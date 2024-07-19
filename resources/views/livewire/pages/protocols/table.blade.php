@@ -21,10 +21,10 @@
             </div>
             <div class="row">
                 <div class="form-group col-sm-2">
-                    <x-input type="date" wire:model.lazy="dt_ini" class="tooltips" data-text="Data Início"/>
+                    <x-input type="date" wire:model.live.debounce.500ms="dt_ini" class="tooltips" data-text="Data Início"/>
                 </div>
                 <div class="form-group col-sm-2">
-                    <x-input type="date" wire:model.lazy="dt_end" class="tooltips" data-text="Data Fim"/>
+                    <x-input type="date" wire:model.live.debounce.500ms="dt_end" class="tooltips" data-text="Data Fim"/>
                 </div>
                 <div class="form-group col-sm-2">
                     <button type="button" class="btn btn-secondary" wire:click="clearFilter">Limpar Filtros</button>
