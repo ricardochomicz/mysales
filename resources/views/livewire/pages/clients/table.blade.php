@@ -76,8 +76,8 @@
                         @endforeach
                         </tbody>
                     </table>
-                    <div class="d-flex justify-content-center">
-                        {{$data->links()}}
+                    <div class="d-flex justify-content-center pagination-sm">
+                        {!!  $data->links('vendor.pagination.bootstrap-4') !!}
                     </div>
                 </div>
             </div>
