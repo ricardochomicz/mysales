@@ -52,7 +52,7 @@
                                       {{$d->qty}}
                                 </td>
                                 <td class="text-center">
-                                    {{$d->client->classification->name}}<br>{{$d->client->classification->months}}
+                                    {{$d->client->classification->name}}-{{$d->client->classification->months}}
                                 </td>
 
                                 <td class="text-center">
