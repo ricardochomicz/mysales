@@ -29,15 +29,6 @@
         <div class="row">
             <div class="col-12">
                 <h2 class="page-header">
-                    @if(@$opportunity->operadora->name == 'CLARO')
-                        <img src="{{asset('../assets/images/claro-logo.png')}}" alt="Logo" width="70px">
-                    @elseif(@$opportunity->operadora->name == 'TIM')
-                        <img src="{{asset('../assets/images/tim-logo.png')}}" alt="Logo" width="70px">
-                    @elseif(@$opportunity->operadora->name == 'VIVO')
-                        <img src="{{asset('../assets/images/vivo-logo.png')}}" alt="Logo" width="70px">
-                    @else
-                        Proposta Comercial
-                    @endif
                     @if(@$opportunity->operator->name == 'CLARO')
                         Proposta Comercial Claro Empresas
                     @elseif(@$opportunity->operator->name == 'TIM')
