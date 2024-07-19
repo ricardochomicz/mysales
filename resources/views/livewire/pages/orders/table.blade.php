@@ -42,20 +42,18 @@
                         <caption><small>Oportunidades cadastradas <b>{{$data->count()}}</b></small></caption>
                         <thead class="bg-gray-light">
                         <tr>
-                            <th>#</th>
                             <th>Cliente</th>
                             <th class="text-center">Solicitação</th>
                             <th class="text-center">Total</th>
                             <th class="text-center">Status</th>
                             <th class="text-center">Ativação</th>
-                            <th class="text-center" width="15%">...</th>
+                            <th class="text-center" width="5%">...</th>
                         </tr>
                         </thead>
                         <tbody>
 
                         @forelse($data as $d)
                             <tr>
-                                <td>{{$d->id}}</td>
                                 <td>
                                     {{$d->client->name}}<br><small>{{$d->client->document}}</small>
                                 </td>
