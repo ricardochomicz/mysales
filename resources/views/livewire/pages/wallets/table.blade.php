@@ -38,7 +38,7 @@
                             <th class="text-center">Ativação</th>
                             <th class="text-center">Renovação</th>
                             <th class="text-center">M</th>
-                            <th class="text-center" width="15%">...</th>
+                            <th class="text-center" width="5%">...</th>
                         </tr>
                         </thead>
                         <tbody>
