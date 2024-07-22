@@ -32,7 +32,7 @@
                         <thead class="bg-gray-light">
                         <tr>
                             <th>Cliente</th>
-                            <th class="text-center">Total</th>
+                            <th class="text-center" width="10%">Total</th>
                             <th class="text-center">Classificação</th>
                             <th class="text-center">Ativação</th>
                             <th class="text-center">Renovação</th>
