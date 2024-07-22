@@ -28,7 +28,7 @@
                 <div class="table-responsive rounded">
 <div class="alert alert-warning text-center"><i class="fas fa-exclamation-circle"></i> Data renovação com base em <b>18 meses</b>. Verifique a classificação do cliente.</div>
                     <table class="table table-borderless table-striped table-hover">
-                        <caption><small>Clientes na Carteira <b>{{$data->count()}}</b></small></caption>
+                        <caption><small>Clientes na Carteira <b>{{$data->total()}}</b></small></caption>
                         <thead class="bg-gray-light">
                         <tr>
                             <th>Cliente</th>
