@@ -39,7 +39,7 @@
                         <thead class="bg-gray-light">
                         <tr>
                             <th>#</th>
-                            <th></th>
+{{--                            <th></th>--}}
                             <th>Produto</th>
                             <th>Valor</th>
                             <th class="text-center">Operadora</th>
@@ -51,10 +51,9 @@
                         @foreach($data as $d)
                             <tr>
                                 <td class="align-middle">{{$d->id}}</td>
-
-                                <td class="align-middle">
-                                    <img src="{{asset($d->image_url)}}" width="40px" alt="Imagem" class="rounded-circle">
-                                </td>
+{{--                                <td class="align-middle">--}}
+{{--                                    <img src="{{asset($d->image_url)}}" width="40px" alt="Imagem" class="rounded-circle">--}}
+{{--                                </td>--}}
                                 <td class="align-middle">{{$d->name}}</td>
                                 <td class="align-middle">R$ {{$d->price}}</td>
                                 <td class="align-middle text-center">{{$d->operator->name}}</td>
