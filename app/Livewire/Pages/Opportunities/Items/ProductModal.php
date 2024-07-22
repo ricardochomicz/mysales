@@ -57,6 +57,7 @@ class ProductModal extends Component
         $this->operators = $operators->toSelect();
         $this->order_types = $order_types->toSelect();
         $this->products = collect();
+        $this->page = 1;
 
 //        if (session()->has('items')) {
 //            $this->items = session('items');
@@ -285,25 +286,28 @@ class ProductModal extends Component
         $page = $page ?: LengthAwarePaginator::resolveCurrentPage() ?: 1;
         $items = $items instanceof Collection ? $items : Collection::make($items);
 
-        $path = Request::path();
+        $path = Request::url();
 
-        if (str_contains($path, 'edit')) {
-            $basePath = Str::beforeLast('./edit', $path);
-        } else {
-            $basePath = Str::beforeLast('./create', $path);
-        }
+//        if (str_contains($path, 'edit')) {
+//            $basePath = Str::before($path, './edit');
+//        } elseif (str_contains($path, 'create')) {
+//            $basePath = Str::before($path, './create');
+//        } else {
+//            $basePath = $path; // Default base path
+//        }
 
-        $paginator = new LengthAwarePaginator(
+        return new LengthAwarePaginator(
             $items->forPage($page, $perPage),
             $items->count(),
             $perPage,
             $page,
-            $options
+
+            array_merge(['path' => $path], $options)
         );
 
-        $paginator->withPath($basePath);
-
-        return $paginator;
+//        $paginator->withPath($basePath);
+//
+//        return $paginator;
     }
 
     public function updatedSelectAll($value)
@@ -352,7 +356,6 @@ class ProductModal extends Component
             'totalQty' => $totals['totalQty'],
             'totalValue' => $totals['totalValue'],
             'data' => $this->paginate($this->filteredItems),
-//            'data' => $this->filteredItems,
         ]);
     }
 

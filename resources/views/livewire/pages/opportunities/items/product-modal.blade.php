@@ -171,7 +171,7 @@
             <table class="table caption-top">
                 <thead>
                 <tr>
-                    <th><input type="checkbox" wire:model="selectAll"></th>
+                    <th><input type="checkbox" wire:model.change="selectAll"></th>
                     <th>Nr. Linha</th>
                     <th>Plano</th>
                     <th>Valor Unit</th>
@@ -284,6 +284,25 @@
 
         Livewire.on('closeModal', () => {
             $('#bulkEditModal').modal('hide');
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Obtem o checkbox "Selecionar Todos"
+            var selectAllCheckbox = document.getElementById('select-all-checkbox');
+
+            // Obtem todos os outros checkboxes
+            var moduleCheckboxes = document.querySelectorAll('.module-checkbox');
+
+            // Adiciona um evento de clique ao checkbox "Selecionar Todos"
+            selectAllCheckbox.addEventListener('click', function () {
+                // Verifique se o checkbox "Selecionar Todos" está marcado
+                var isChecked = selectAllCheckbox.checked;
+
+                // Atualiza o estado de todos os outros checkboxes
+                moduleCheckboxes.forEach(function (checkbox) {
+                    checkbox.checked = isChecked;
+                });
+            });
         });
 
     </script>

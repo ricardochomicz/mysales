@@ -109,7 +109,7 @@ class ProtocolService
 
     private function gravaArquivo($id, $data)
     {
-        return $data->store('/docs/' . $id, "public");
+        return $data->store('/tenant/' . auth()->user()->tenant->id . '/docs-protocol/' . $id, "public");
     }
 
     private function whatsapp($phone, $texto)
