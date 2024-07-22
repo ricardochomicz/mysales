@@ -43,7 +43,7 @@ class ProductModal extends Component
 
     public $subtotal;
 
-    public $page;
+    public $page = 1;
 
     public $selectedItems = [];
     public $selectAll = false;
@@ -57,7 +57,6 @@ class ProductModal extends Component
         $this->operators = $operators->toSelect();
         $this->order_types = $order_types->toSelect();
         $this->products = collect();
-        $this->page = 1;
 
 //        if (session()->has('items')) {
 //            $this->items = session('items');
@@ -166,6 +165,7 @@ class ProductModal extends Component
 
         }
 
+
         session(['items' => $this->items]);
 
         $this->calculateTotals();
@@ -177,6 +177,12 @@ class ProductModal extends Component
         $this->filteredItems = $this->items;
 
         $this->updateOpportunityTotal();
+
+    }
+
+    public function getSessionItems()
+    {
+        return session('items');
     }
 
     public function editItem($index): void
@@ -286,28 +292,19 @@ class ProductModal extends Component
         $page = $page ?: LengthAwarePaginator::resolveCurrentPage() ?: 1;
         $items = $items instanceof Collection ? $items : Collection::make($items);
 
-        $path = Request::url();
+        $path = request()->url();
 
-//        if (str_contains($path, 'edit')) {
-//            $basePath = Str::before($path, './edit');
-//        } elseif (str_contains($path, 'create')) {
-//            $basePath = Str::before($path, './create');
-//        } else {
-//            $basePath = $path; // Default base path
-//        }
+        session(['items' => $this->items]);
 
         return new LengthAwarePaginator(
             $items->forPage($page, $perPage),
             $items->count(),
             $perPage,
             $page,
-
-            array_merge(['path' => $path], $options)
+            array_merge(['path' => $path, 'pageName' => 'page'], $options)
         );
 
-//        $paginator->withPath($basePath);
-//
-//        return $paginator;
+
     }
 
     public function updatedSelectAll($value)

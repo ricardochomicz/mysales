@@ -228,7 +228,7 @@
 
                 </tbody>
             </table>
-            <div class="pagination justify-content-center pagination-sm">
+            <div class="pagination justify-content-center pagination-sm" wire:ignore>
                 {!!  $data->links('vendor.pagination.bootstrap-4') !!}
             </div>
 

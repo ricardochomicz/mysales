@@ -40,6 +40,7 @@ class OpportunityController extends Controller
      */
     public function create()
     {
+        session()->forget('items');
         $view = [
             'operators' => $this->operatorService->toSelect(),
             'order_types' => $this->orderTypeService->toSelect(),
