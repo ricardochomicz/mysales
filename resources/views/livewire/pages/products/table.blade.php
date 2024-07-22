@@ -53,7 +53,7 @@
                                 <td class="align-middle">{{$d->id}}</td>
 
                                 <td class="align-middle">
-                                    <img src="{{$d->image_url}}" width="40px" alt="Imagem" class="rounded-circle">
+                                    <img src="{{asset($d->image_url)}}" width="40px" alt="Imagem" class="rounded-circle">
                                 </td>
                                 <td class="align-middle">{{$d->name}}</td>
                                 <td class="align-middle">R$ {{$d->price}}</td>

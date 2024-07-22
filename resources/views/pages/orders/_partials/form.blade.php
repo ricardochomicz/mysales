@@ -37,9 +37,10 @@
 
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="form-group col-sm-6">
-                        <x-input type="date" onchange="getDateMaturity()" name="activate" label="Ativação"
+                        <x-input type="date" onchange="getDateMaturity({{$data->client->classification->months}})" name="activate" label="Ativação"
                                  value="{{old('activate') ?? @$data->activate}}" :disabled="$data->checked == 1"/>
                     </div>
                     @can('isAdmin')
@@ -72,12 +73,12 @@
 
 @push('scripts')
     <script>
-        function getDateMaturity() {
+        function getDateMaturity(dat) {
             let activateDate = document.querySelector("input[name='activate']").value;
             if (activateDate) {
                 let data = new Date(activateDate);
                 if (!isNaN(data.getTime())) {
-                    data.setMonth(data.getMonth() + 18);
+                    data.setMonth(data.getMonth() + dat);
                     let year = data.getFullYear();
                     let month = ('0' + (data.getMonth() + 1)).slice(-2);
                     let day = ('0' + data.getDate()).slice(-2);
