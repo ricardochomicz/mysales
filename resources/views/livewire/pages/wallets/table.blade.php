@@ -36,7 +36,7 @@
                             <th class="text-center">Classificação</th>
                             <th class="text-center">Ativação</th>
                             <th class="text-center">Renovação</th>
-                            <th class="text-center tooltips" data-text="Meses Restantes"> MR</th>
+                            <th class="text-center tooltips" data-text="Tempo Contrato"> TC</th>
                             <th class="text-center" width="5%">...</th>
                         </tr>
                         </thead>
@@ -68,7 +68,7 @@
 
                                 </td>
                                 <td class="text-center">
-                                    {{ floor(\Carbon\Carbon::now()->diffInMonths(\Carbon\Carbon::parse($d->renew_date))+1) }}
+                                    {{floor(\Carbon\Carbon::parse($d->activate)->diffInMonths(\Carbon\Carbon::now()))}}
                                 </td>
 
                                 <td class="text-center">
