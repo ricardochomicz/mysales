@@ -73,8 +73,8 @@ class Table extends Component
         $this->search = '';
         $this->type = '';
         $this->status = '';
-        $this->dt_ini = date("Y-m-01");
-        $this->dt_end = date("Y-m-t");
+        $this->dt_ini = '';
+        $this->dt_end = '';
         $this->dispatch('resetSelectpicker');
     }
 }
