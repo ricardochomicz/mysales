@@ -193,15 +193,15 @@ class Opportunity extends Model
             $query->whereIn('order_type', $type);
         });
 
-        $query->when(!($filters['search'] || $filters['status'] || $filters['type'] || $filters['dt_ini'] && $filters['dt_end']), function ($query) use ($filters) {
-            // Se não houver filtro de busca ou status, filtrar pelo mês atual
-            $query->whereMonth('forecast', '=', Carbon::now()->month);
-        });
-
         $query->when($filters['dt_ini'] && $filters['dt_end'], function ($query) use ($filters) {
             // Se datas de início e fim estão presentes, aplicar o filtro
             $query->whereDate('forecast', '>=', Carbon::parse($filters['dt_ini']));
             $query->whereDate('forecast', '<=', Carbon::parse($filters['dt_end']));
+        });
+
+        $query->when(!($filters['search'] || $filters['status'] || $filters['type'] || $filters['dt_ini'] && $filters['dt_end']), function ($query) use ($filters) {
+            // Se não houver filtro de busca ou status, filtrar pelo mês atual
+            $query->whereMonth('forecast', '=', Carbon::now()->month);
         });
     }
 
