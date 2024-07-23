@@ -27,7 +27,7 @@
 
                     <table class="table table-borderless table-hover">
                         @can('isSuperAdmin')
-                            <caption><small>Empresas cadastradas <b>{{$data->count()}}</b></small></caption>
+                            <caption><small>Empresas cadastradas <b>{{$data->total()}}</b></small></caption>
                         @endcan
                         <thead class="bg-gray-light">
                         <tr>

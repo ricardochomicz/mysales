@@ -294,8 +294,6 @@ class ProductModal extends Component
 
         $path = request()->url();
 
-        session(['items' => $this->items]);
-
         return new LengthAwarePaginator(
             $items->forPage($page, $perPage),
             $items->count(),

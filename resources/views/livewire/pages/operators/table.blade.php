@@ -21,7 +21,7 @@
                 <div class="table-responsive rounded">
 
                     <table class="table table-borderless table-hover">
-                        <caption><small>Operadoras cadastradas <b>{{$data->count()}}</b></small></caption>
+                        <caption><small>Operadoras cadastradas <b>{{$data->total()}}</b></small></caption>
                         <thead class="bg-gray-light">
                         <tr>
                             <th>#</th>

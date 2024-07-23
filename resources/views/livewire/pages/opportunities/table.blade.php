@@ -55,7 +55,7 @@
                 <div class="table-responsive rounded">
 
                     <table class="table table-borderless table-striped table-hover">
-                        <caption><small>Oportunidades cadastradas <b>{{$data->count()}}</b></small></caption>
+                        <caption><small>Oportunidades cadastradas <b>{{$data->total()}}</b></small></caption>
                         <thead class="bg-gray-light">
                         <tr>
                             <th>#</th>

@@ -229,7 +229,7 @@
                 </tbody>
             </table>
             <div class="pagination justify-content-center pagination-sm" wire:ignore>
-                {!!  $data->links('vendor.pagination.bootstrap-4') !!}
+                {!! $data->links('livewire.pages.opportunities.items.pagination') !!}
             </div>
 
             <div class="col-6 border rounded mb-2 bg-gradient-light">
