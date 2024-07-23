@@ -208,7 +208,7 @@ class ProductModal extends Component
     {
         unset($this->items[$index]);
         $this->items = array_values($this->items); // Reindexa o array após remover um item
-//        session(['items' => $this->items]);
+        session(['items' => $this->items]);
         $this->filteredItems = $this->items;
 
         $totals = $this->calculateTotals();
