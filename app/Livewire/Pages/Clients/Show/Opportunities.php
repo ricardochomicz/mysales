@@ -31,7 +31,7 @@ class Opportunities extends Component
     {
         $clientService = new ClientService();
         $client = $clientService->get($this->client);
-        $orders = $client->orders()->orderBy('created_at', 'asc')->paginate();
+        $orders = $client->orders()->orderBy('created_at', 'desc')->paginate();
         return view('livewire.pages.clients.show.opportunities',[
             'clients' =>$client,
             'orders' => $orders
