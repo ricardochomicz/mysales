@@ -58,6 +58,11 @@
                        class="btn btn-secondary btn-sm tooltips pull-bs-canvas-right" data-text="Detalhes">
                         <i class="fas fa-binoculars"></i>
                     </a>
+                        <a href="javascript:void(0)" wire:click="loadComments({{$d->id}})"
+                           data-toggle="modal" data-target="#modalComments"
+                           class="btn btn-success btn-sm tooltips" data-text="Observações">
+                            <i class="fas fa-comments"></i>
+                        </a>
                 </td>
             </tr>
         @endforeach
@@ -65,5 +70,43 @@
     </table>
     <div class="d-flex justify-content-center pagination-sm">
         {!!  $orders->links('vendor.pagination.bootstrap-4') !!}
+    </div>
+
+    <div class="modal fade" id="modalComments"  aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore.self>
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Comentários Oportunidade
+                        - {{@$opportunity->client->name}}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class=" card-widget">
+                        <div class="card-footer card-comments" style="margin: 0 auto; max-height: calc(50vh - 50px); overflow-y: auto;">
+                            @foreach($comments as $comment)
+                                <div class="card-comment">
+                                    <div class="comment-text">
+                                    <span class="username">{{$comment->user->name}}
+                                        <span class="text-muted float-right">{{Carbon\Carbon::parse($comment->created_at)->format('d/m/Y H:i')}}</span>
+                                    </span>
+                                        @if($comment->type == 'order')
+                                            <small class="font-italic">(Pedido)</small> {{$comment->content}}
+                                        @else
+                                            {{$comment->content}}
+                                        @endif
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

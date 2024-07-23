@@ -3,6 +3,7 @@
 namespace App\Livewire\Pages\Clients\Show;
 
 use App\Models\Client;
+use App\Models\Opportunity;
 use App\Services\ClientService;
 use Livewire\Component;
 
@@ -10,6 +11,11 @@ class Opportunities extends Component
 {
     public $client;
     public $orderId;
+
+    public $comments = [];
+
+    public $opportunity;
+
 
     public function mount($client)
     {
@@ -30,6 +36,14 @@ class Opportunities extends Component
             'clients' =>$client,
             'orders' => $orders
         ]);
+    }
+
+    public function loadComments($id): void
+    {
+        $this->opportunity = Opportunity::with('client')->find($id);
+        $this->comments = $this->opportunity->comments;
+
+        $this->dispatch('openModal');
     }
 
 
