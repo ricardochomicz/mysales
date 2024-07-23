@@ -58,7 +58,7 @@
                        class="btn btn-secondary btn-sm tooltips pull-bs-canvas-right" data-text="Detalhes">
                         <i class="fas fa-binoculars"></i>
                     </a>
-                        <a href="javascript:void(0)" wire:click="loadComments({{$d->id}})"
+                        <a href="javascript:void(0)" wire:click="loadComments({{$order->id}})"
                            data-toggle="modal" data-target="#modalComments"
                            class="btn btn-success btn-sm tooltips" data-text="Observações">
                             <i class="fas fa-comments"></i>
@@ -95,7 +95,7 @@
                                         @if($comment->type == 'order')
                                             <small class="font-italic">(Pedido)</small> {{$comment->content}}
                                         @else
-                                            {{$comment->content}}
+                                            <small class="font-italic">(Oportunidade)</small> {{$comment->content}}
                                         @endif
                                     </div>
                                 </div>
