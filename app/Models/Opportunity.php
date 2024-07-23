@@ -201,7 +201,10 @@ class Opportunity extends Model
 
         $query->when(!($filters['search'] || $filters['status'] || $filters['type'] || $filters['dt_ini'] && $filters['dt_end']), function ($query) use ($filters) {
             // Se não houver filtro de busca ou status, filtrar pelo mês atual
-            $query->whereMonth('forecast', '=', Carbon::now()->month);
+            $currentMonth = Carbon::now()->month;
+            $currentYear = Carbon::now()->year;
+            $query->whereMonth('forecast', '=', $currentMonth);
+            $query->whereYear('forecast', '=', $currentYear);
         });
     }
 
