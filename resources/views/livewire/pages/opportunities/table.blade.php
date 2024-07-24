@@ -19,12 +19,10 @@
                             wire:model.live="trashed" class="selectpicker">
                         <option value="only">Inativos</option>
                     </select>
-                    {{$trashed}}
                 </div>
                 <div class="form-group col-sm-2" wire:ignore>
                     <x-select :options="$funnels" wire:model.live="funnel" title="Funil" id="sel2"/>
                 </div>
-                {{$funnel}}
                 <div class="form-group col-sm-2" wire:ignore>
                     <select name="probability" data-live-search="true" title="Probabilidade" id="sel3"
                             wire:model.live="probability"
