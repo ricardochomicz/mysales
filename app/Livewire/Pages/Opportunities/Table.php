@@ -56,11 +56,11 @@ class Table extends Component
 
     protected $listeners = ['resetSelectpicker' => '$refresh'];
 
-    public function mount()
-    {
-        $this->dt_ini = date("Y-m-01");
-        $this->dt_end = date("Y-m-t");
-    }
+//    public function mount()
+//    {
+//        $this->dt_ini = date("Y-m-01");
+//        $this->dt_end = date("Y-m-t");
+//    }
 
     public function render()
     {
@@ -102,8 +102,8 @@ class Table extends Component
         $this->funnel = '';
         $this->probability = '';
         $this->type = '';
-        $this->dt_ini = date("Y-m-01");
-        $this->dt_end = date("Y-m-t");
+        $this->dt_ini = '';
+        $this->dt_end = '';
         $this->dispatch('resetSelectpicker');
     }
 

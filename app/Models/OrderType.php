@@ -15,6 +15,7 @@ class OrderType extends Model
     protected $fillable = [
         'name',
         'tenant_id',
+        'edit'
     ];
 
     public function tenant(): \Illuminate\Database\Eloquent\Relations\BelongsTo

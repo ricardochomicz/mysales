@@ -22,40 +22,7 @@ class WalletService
             ->whereNull('deleted_at')
             ->filterWallets($data)
             ->paginate();
-//        return Opportunity::with(['ordem'])
-//            ->select(
-//                'client_id',
-//                DB::raw('MAX(renew_date) as renew_date'),
-//                DB::raw('SUM(qty) as total_qty'),
-//                DB::raw('SUM(total) as total_amount'),
-//                'tenant_id',
-//                'type',
-//                'renew',
-//                'send_order',
-//                'status_id',
-//                'order_type',
-//                'deleted_at'
-//            )
-//            ->orderBy('renew_date', 'asc')
-//            ->where('tenant_id', auth()->user()->tenant->id)
-//            ->where('type', 'wallet')
-//            ->where('renew', 0)
-//            ->where('send_order', 1)
-//            ->whereIn('status_id', [3, 4])
-//            ->whereIn('order_type', [1, 2, 3])
-//            ->whereNull('deleted_at')
-//            ->groupBy(
-//                'client_id',
-//                'tenant_id',
-//                'type',
-//                'renew',
-//                'send_order',
-//                'status_id',
-//                'order_type',
-//                'deleted_at'
-//            )
-//            ->filterWallets($data)
-//            ->paginate();
+
     }
 
     public function cloneWallet($id)

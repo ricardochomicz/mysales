@@ -104,11 +104,13 @@ class Opportunity extends Model
                     $query->where('name', 'like', '%' . $search . '%');
                 });
                 $query->orWhere('identify', 'like', '%' . $search . '%');
-            })->when($filters['trashed'] ?? null, function ($query, $trashed) {
-                if ($trashed === 'only') {
-                    $query->onlyTrashed();
-                }
             });
+        });
+
+        $query->when($filters['trashed'] ?? null, function ($query, $trashed) {
+            if ($trashed === 'only') {
+                $query->onlyTrashed();
+            }
         });
 
         $query->when($filters['funnel'] ?? null, function ($query, $status) {
@@ -132,15 +134,17 @@ class Opportunity extends Model
             $query->where('order_type', $type);
         });
 
-        $query->when(!($filters['search'] || $filters['funnel'] || $filters['type'] || $filters['dt_ini'] && $filters['dt_end']), function ($query) use ($filters) {
-            // Se não houver filtro de busca ou status, filtrar pelo mês atual
-            $query->whereMonth('forecast', '=', Carbon::now()->month);
-        });
-
         $query->when($filters['dt_ini'] && $filters['dt_end'], function ($query) use ($filters) {
             // Se datas de início e fim estão presentes, aplicar o filtro
             $query->whereDate('forecast', '>=', Carbon::parse($filters['dt_ini']));
             $query->whereDate('forecast', '<=', Carbon::parse($filters['dt_end']));
+        });
+
+        $query->when(!($filters['search'] || $filters['funnel'] || $filters['type'] || $filters['dt_ini'] && $filters['dt_end']), function ($query) use ($filters) {
+            $currentMonth = Carbon::now()->month;
+            $currentYear = Carbon::now()->year;
+            $query->whereMonth('forecast', '=', $currentMonth);
+            $query->whereYear('forecast', '=', $currentYear);
         });
     }
 
