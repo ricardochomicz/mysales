@@ -18,6 +18,8 @@
                 <div class="modal-body text-center" style="padding-bottom: 0px">
                     Deseja renovar o cliente?
                     <br>
+                    <p><b id="tituloRegistro"></b></p>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
