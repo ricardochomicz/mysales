@@ -10,6 +10,7 @@ use App\Services\OpportunityService;
 use App\Services\OrderTypeService;
 use App\Traits\TypeTags;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OpportunityController extends Controller
 {
@@ -158,6 +159,29 @@ class OpportunityController extends Controller
             return view('proposal.404');
         }
 
+    }
+
+    public function createAndGroupOpportunities($orderIds, $clientId)
+    {
+        DB::transaction(function () use ($orderIds, $clientId) {
+            // Criar uma nova oportunidade
+            $newOpportunity = new Opportunity();
+            $newOpportunity->client_id = $clientId;
+//            $newOpportunity->status_id = 1; // Defina o status inicial desejado para a nova oportunidade
+            $newOpportunity->save();
+
+            foreach ($orderIds as $orderId) {
+                $order = Opportunity::with('items_opportunity')->find($orderId);
+
+                if ($order && $order->client_id === $clientId) {
+                    foreach ($order->items_opportunity as $item) {
+                        $newItem = $item->replicate();
+                        $newItem->opportunity_id = $newOpportunity->id;
+                        $newItem->save();
+                    }
+                }
+            }
+        });
     }
 
 

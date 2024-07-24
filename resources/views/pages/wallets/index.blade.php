@@ -15,6 +15,6 @@
 
     <livewire:pages.wallets.table>
 
-        <x-modal_ativo_inativo titulo="Pedido"/>
+        <x-modal_renew titulo="Pedido"/>
 
 @stop
