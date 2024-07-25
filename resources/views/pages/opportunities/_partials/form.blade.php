@@ -12,7 +12,8 @@
         @if( Route::currentRouteNamed('opportunities.create'))
             <div class="row">
                 <div class="form-group col-sm-10">
-                    <input class="form-control form-control-navbar typeahead2 @error('client_id') is-invalid @enderror" type="search" name="query"
+                    <input class="form-control form-control-navbar typeahead2 @error('client_id') is-invalid @enderror"
+                           type="search" name="query"
                            data-provide="typeahead"
                            placeholder="Pesquise pelo nome ou CNPJ">
 
@@ -22,7 +23,8 @@
                     <a href="{{route('clients.create')}}" class="btn btn-dark">Cadastrar Cliente</a>
                 </div>
             </div>
-            <div class="alert alert-danger d-none" id="empty-message">Cliente não possui contatos cadastrados. Para continuar cadastre <a
+            <div class="alert alert-danger d-none" id="empty-message">Cliente não possui contatos cadastrados. Para
+                continuar cadastre <a
                     href="javascript:void(0)" class="alert-link" id="register-link">aqui</a> um novo contato.
             </div>
         @else
@@ -33,9 +35,11 @@
                         href="https://wa.me/55{{@$data->client->persons[0]->phone}}"
                         target="_blank">{{@$data->client->persons[0]->phone}}</a>
                 </p>
-                <a href="{{route('opportunity-proposal', @$data->uuid)}}" target="_blank" class="btn btn-primary"><i class="fas fa-print"></i> Imprimir Proposta</a>
+                <a href="{{route('opportunity-proposal', @$data->uuid)}}" target="_blank" class="btn btn-primary"><i
+                        class="fas fa-print"></i> Imprimir Proposta</a>
             @else
-                <p class="text-danger">Nenhum contato cadastrado para o cliente. <a href="{{route('clients.show', @$data->client->id)}}">Cadastre aqui.</a></p>
+                <p class="text-danger">Nenhum contato cadastrado para o cliente. <a
+                        href="{{route('clients.show', @$data->client->id)}}">Cadastre aqui.</a></p>
             @endif
         @endif
         <div class="row">
@@ -72,11 +76,35 @@
 
         </div>
         <div class="row">
-            <div class="form-group col-sm-12">
-                <x-text-area label="Observação" name="content"></x-text-area>
+            <div class="form-group col-sm-6">
+                <x-text-area rows="5" label="Observação" name="content"></x-text-area>
+            </div>
+            <div class="form-group col-sm-6">
+                <div class="card-comments"
+                     style="margin: 0 auto; max-height: calc(30vh - 30px); overflow-y: auto;">
+                    @if(isset($comments))
+                        @forelse($comments as $comment)
+                            <div class="card-comment">
+                                <div class="comment-text">
+                                    <span class="username">{{$comment->user->name}}
+                                        <span
+                                            class="text-muted float-right">{{Carbon\Carbon::parse($comment->created_at)->format('d/m/Y H:i')}}</span>
+                                    </span>
+                                    @if($comment->type == 'order')
+                                        <small class="font-italic">(Pedido)</small> {{$comment->content}}
+                                    @else
+                                        {{$comment->content}}
+                                    @endif
+                                </div>
+                            </div>
+                        @empty
+                            <span>Nenhum comentário!!!</span>
+                        @endforelse
+                    @endif
+                </div>
             </div>
         </div>
-            <hr>
+        <hr>
 
         <livewire:pages.opportunities.items.product-modal/>
 

@@ -83,10 +83,12 @@ class OpportunityController extends Controller
             notyf()->error("Ops! Oportunidade não encontrada.");
             return back();
         }
+
         $view = [
             'operators' => $this->operatorService->toSelect(),
             'order_types' => $this->orderTypeService->toSelect(),
             'funnel' => $this->typeFunnel(),
+            'comments' => $data->comments,
             'data' => $data,
         ];
         return view('pages.opportunities.edit', $view);
