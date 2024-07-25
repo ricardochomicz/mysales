@@ -242,7 +242,7 @@
 </div>
 
 @push('scripts')
-    <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
+    <script src="{{asset('assets/plugins/jquery-ui.js')}}"></script>
     <script>
         $(function () {
             $(".sortable-card").sortable({
