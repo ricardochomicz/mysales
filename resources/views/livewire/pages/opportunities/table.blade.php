@@ -38,7 +38,8 @@
             </div>
             <div class="row">
                 <div class="form-group col-sm-2">
-                    <x-input type="date" wire:model.live.debounce.500ms="dt_ini" class="tooltips" data-text="Data Início"/>
+                    <x-input type="date" wire:model.live.debounce.500ms="dt_ini" class="tooltips"
+                             data-text="Data Início"/>
                 </div>
                 <div class="form-group col-sm-2">
                     <x-input type="date" wire:model.live.debounce.500ms="dt_end" class="tooltips" data-text="Data Fim"/>
@@ -78,7 +79,8 @@
                                 <td class="text-center">
                                     {{$d->ordem->name}}<br><small>{{$d->operadora->name}}</small>
                                 </td>
-                                <td class="text-center">R$ {{number_format($d->total, 2, ',', '.')}}<br>{{( $d->qty )}}</td>
+                                <td class="text-center">R$ {{number_format($d->total, 2, ',', '.')}}<br>{{( $d->qty )}}
+                                </td>
                                 <td class="text-center">
                                     @switch($d->funnel)
                                         @case('prospect')
@@ -142,7 +144,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modalComments"  aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore.self>
+    <div class="modal fade" id="modalComments" aria-labelledby="exampleModalLabel" aria-hidden="true" wire:ignore.self>
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -155,12 +157,14 @@
                 <div class="modal-body">
 
                     <div class=" card-widget">
-                        <div class="card-footer card-comments" style="margin: 0 auto; max-height: calc(50vh - 50px); overflow-y: auto;">
-                            @foreach($comments as $comment)
+                        <div class="card-footer card-comments"
+                             style="margin: 0 auto; max-height: calc(50vh - 50px); overflow-y: auto;">
+                            @forelse($comments as $comment)
                                 <div class="card-comment">
                                     <div class="comment-text">
                                     <span class="username">{{$comment->user->name}}
-                                        <span class="text-muted float-right">{{Carbon\Carbon::parse($comment->created_at)->format('d/m/Y H:i')}}</span>
+                                        <span
+                                            class="text-muted float-right">{{Carbon\Carbon::parse($comment->created_at)->format('d/m/Y H:i')}}</span>
                                     </span>
                                         @if($comment->type == 'order')
                                             <small class="font-italic">(Pedido)</small> {{$comment->content}}
@@ -169,7 +173,9 @@
                                         @endif
                                     </div>
                                 </div>
-                            @endforeach
+                            @empty
+                                <span>Nenhum comentário!!!</span>
+                            @endforelse
                         </div>
                     </div>
                 </div>
@@ -179,7 +185,6 @@
             </div>
         </div>
     </div>
-
 
 
 </div>

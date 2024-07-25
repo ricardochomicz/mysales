@@ -115,15 +115,7 @@ class Opportunity extends Model
 
         $query->when($filters['funnel'] ?? null, function ($query, $status) {
             // Filtro de status independente
-            if ($status === 'prospect') {
-                $query->where('funnel', 'PROSPECT');
-            } elseif ($status === 'negotiation') {
-                $query->where('funnel', 'NEGOCIAÇÃO');
-            } elseif ($status === 'closure') {
-                $query->where('funnel', 'FECHAMENTO');
-            } elseif ($status === 'correction') {
-                $query->where('funnel', 'CORREÇÃO');
-            }
+            $query->where('funnel', $status);
         });
 
         $query->when($filters['probability'] ?? null, function($query, $probability){
