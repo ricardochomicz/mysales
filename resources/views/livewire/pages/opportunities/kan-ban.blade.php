@@ -86,7 +86,7 @@
                                 {{ $item->client->name }}
                             </small>
                             <div class="card-body p-2">
-                                <small>{{ $item->ordem->name }} - {{$item->operadora->name}}</small><br>
+                                <small><i class="fas fa-thermometer-half"></i> <b>{{$item->probability}}%</b> - {{ $item->ordem->name }} - {{$item->operadora->name}}</small><br>
                                 <small class="font-weight-bold">R$ {{number_format($item->total, 2, ',','.')}}
                                     ( {{ $item->qty }} )</small><br>
                                 <div class="d-flex justify-content-between align-items-center">
@@ -115,7 +115,7 @@
                                 {{ $item->client->name }}
                             </small>
                             <div class="card-body p-2">
-                                <small>{{ $item->ordem->name }} - {{$item->operadora->name}}</small><br>
+                                <small><i class="fas fa-thermometer-half"></i> <b>{{$item->probability}}%</b> - {{ $item->ordem->name }} - {{$item->operadora->name}}</small><br>
                                 <small class="font-weight-bold">R$ {{number_format($item->total, 2, ',','.')}}
                                     ( {{ $item->qty }} )</small><br>
                                 <div class="d-flex justify-content-between align-items-center">
@@ -144,7 +144,7 @@
                                 {{ $item->client->name }}
                             </small>
                             <div class="card-body p-2">
-                                <small>{{ $item->ordem->name }} - {{$item->operadora->name}}</small><br>
+                                <small><i class="fas fa-thermometer-half"></i> <b>{{$item->probability}}%</b> - {{ $item->ordem->name }} - {{$item->operadora->name}}</small><br>
                                 <small class="font-weight-bold">R$ {{number_format($item->total, 2, ',','.')}}
                                     ( {{ $item->qty }} )</small><br>
                                 <div class="d-flex justify-content-between align-items-center">
@@ -173,7 +173,7 @@
                                 {{ $item->client->name }}
                             </small>
                             <div class="card-body p-2">
-                                <small>{{ $item->ordem->name }} - {{$item->operadora->name}}</small><br>
+                                <small><i class="fas fa-thermometer-half"></i> <b>{{$item->probability}}%</b> - {{ $item->ordem->name }} - {{$item->operadora->name}}</small><br>
                                 <small class="font-weight-bold">R$ {{number_format($item->total, 2, ',','.')}}
                                     ( {{ $item->qty }} )</small><br>
                                 <div class="d-flex justify-content-between align-items-center">
