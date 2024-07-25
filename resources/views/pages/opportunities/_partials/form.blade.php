@@ -76,33 +76,33 @@
 
         </div>
         <div class="row">
-            <div class="form-group col-sm-6">
-                <x-text-area rows="5" label="Observação" name="content"></x-text-area>
+            <div class="form-group col-sm-12">
+                <x-text-area label="Observação" name="content"></x-text-area>
             </div>
-            <div class="form-group col-sm-6">
-                <div class="card-comments"
-                     style="margin: 0 auto; max-height: calc(30vh - 30px); overflow-y: auto;">
-                    @if(isset($comments))
-                        @forelse($comments as $comment)
-                            <div class="card-comment">
-                                <div class="comment-text">
-                                    <span class="username">{{$comment->user->name}}
-                                        <span
-                                            class="text-muted float-right">{{Carbon\Carbon::parse($comment->created_at)->format('d/m/Y H:i')}}</span>
-                                    </span>
-                                    @if($comment->type == 'order')
-                                        <small class="font-italic">(Pedido)</small> {{$comment->content}}
-                                    @else
-                                        {{$comment->content}}
-                                    @endif
-                                </div>
-                            </div>
-                        @empty
-                            <span>Nenhum comentário!!!</span>
-                        @endforelse
-                    @endif
-                </div>
-            </div>
+{{--            <div class="form-group col-sm-6">--}}
+{{--                <div class="card-comments"--}}
+{{--                     style="margin: 0 auto; max-height: calc(30vh - 30px); overflow-y: auto;">--}}
+{{--                    @if(isset($comments))--}}
+{{--                        @forelse($comments as $comment)--}}
+{{--                            <div class="card-comment">--}}
+{{--                                <div class="comment-text">--}}
+{{--                                    <span class="username">{{$comment->user->name}}--}}
+{{--                                        <span--}}
+{{--                                            class="text-muted float-right">{{Carbon\Carbon::parse($comment->created_at)->format('d/m/Y H:i')}}</span>--}}
+{{--                                    </span>--}}
+{{--                                    @if($comment->type == 'order')--}}
+{{--                                        <small class="font-italic">(Pedido)</small> {{$comment->content}}--}}
+{{--                                    @else--}}
+{{--                                        {{$comment->content}}--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        @empty--}}
+{{--                            <span>Nenhum comentário!!!</span>--}}
+{{--                        @endforelse--}}
+{{--                    @endif--}}
+{{--                </div>--}}
+{{--            </div>--}}
         </div>
         <hr>
 
