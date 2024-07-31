@@ -28,7 +28,7 @@
                     href="javascript:void(0)" class="alert-link" id="register-link">aqui</a> um novo contato.
             </div>
         @else
-            <p class="h5 font-weight-bold">{{@$data->client->name}}<br><small>#{{@$data->identify}}</small></p>
+            <p class="h5 font-weight-bold">{{@$data->client->document}} - {{@$data->client->name}}<br><small>#{{@$data->identify}}</small></p>
             @if(@$data->client->persons[0])
                 <p class="text-primary"><i class="fas fa-user-circle mr-2"></i>
                     {{@$data->client->persons[0]->name}} - <a
