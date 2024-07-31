@@ -91,7 +91,9 @@
                                     ( {{ $item->qty }} )</small><br>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <small>Previsão:
-                                        <b>{{Carbon\Carbon::parse($item->forecast)->format('d/m/Y')}}</b></small>
+                                        <b>{{Carbon\Carbon::parse($item->forecast)->format('d/m/Y')}}</b><br>
+                                        Atualizado {{$item->updated_at->diffForHumans()}}
+                                    </small>
                                     <div>
                                         <a href="{{route('opportunities.edit', $item->id)}}"
                                            class="btn btn-sm btn-primary tooltips" data-text="Editar"><i
@@ -120,7 +122,9 @@
                                     ( {{ $item->qty }} )</small><br>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <small>Previsão:
-                                        <b>{{Carbon\Carbon::parse($item->forecast)->format('d/m/Y')}}</b></small>
+                                        <b>{{Carbon\Carbon::parse($item->forecast)->format('d/m/Y')}}</b><br>
+                                        Atualizado {{$item->updated_at->diffForHumans()}}
+                                    </small>
                                     <div>
                                         <a href="{{route('opportunities.edit', $item->id)}}"
                                            class="btn btn-sm btn-primary tooltips" data-text="Editar"><i
@@ -149,7 +153,9 @@
                                     ( {{ $item->qty }} )</small><br>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <small>Previsão:
-                                        <b>{{Carbon\Carbon::parse($item->forecast)->format('d/m/Y')}}</b></small>
+                                        <b>{{Carbon\Carbon::parse($item->forecast)->format('d/m/Y')}}</b><br>
+                                        Atualizado {{$item->updated_at->diffForHumans()}}
+                                    </small>
                                     <div>
                                         <a href="{{route('opportunities.edit', $item->id)}}"
                                            class="btn btn-sm btn-primary tooltips" data-text="Editar"><i
@@ -178,7 +184,9 @@
                                     ( {{ $item->qty }} )</small><br>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <small>Previsão:
-                                        <b>{{Carbon\Carbon::parse($item->forecast)->format('d/m/Y')}}</b></small>
+                                        <b>{{Carbon\Carbon::parse($item->forecast)->format('d/m/Y')}}</b><br>
+                                        Atualizado {{$item->updated_at->diffForHumans()}}
+                                    </small>
                                     <div>
                                         <a href="{{route('opportunities.edit', $item->id)}}"
                                            class="btn btn-sm btn-primary tooltips" data-text="Editar"><i

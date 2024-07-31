@@ -125,8 +125,93 @@ class ProductModal extends Component
         }
     }
 
+//    public function addItem(): void
+//    {
+//
+//        $this->validate([
+//            'product_id' => 'required',
+//            'order_type_id' => 'required',
+//            'price' => 'required|numeric|min:0',
+//            'qty' => 'required|integer|min:1'
+//        ], [
+//            'order_type_id.required' => 'Selecione o Tipo',
+//            'product_id.required' => 'O produto é obrigatório.',
+//            'price.required' => 'O preço é obrigatório.',
+//            'price.numeric' => 'O preço deve ser um valor numérico.',
+//            'price.min' => 'O preço deve ser um valor positivo.',
+//            'qty.required' => 'A quantidade é obrigatória.',
+//            'qty.integer' => 'A quantidade deve ser um número inteiro.',
+//            'qty.min' => 'A quantidade deve ser pelo menos 1.'
+//        ]);
+//
+//        $factor = $this->updateFactors();
+//        $linesArray = $this->number ? explode(',', $this->number) : [null];
+//        $total = 0;
+//
+//        foreach ($linesArray as $line) {
+//            $qty = is_numeric($this->qty) ? (int)$this->qty : 1;
+//            $subtotal = $this->price * $qty;
+//
+//            if ($this->editIndex !== null) {
+//                $this->items[$this->editIndex] = [
+//                    'id' => $this->itemId ?? '',
+//                    'opportunity_id' => $this->opportunity_id,
+//                    'operator' => $this->operator,
+//                    'number' => trim($line),
+//                    'product_id' => $this->product_id,
+//                    'order_type_id' => $this->order_type_id,
+//                    'price' => $this->price ?? 0,
+//                    'qty' => $qty,
+//                    'subtotal' => $subtotal,
+//                    'factor' => $factor->name ?? 0
+//                ];
+//                $this->editIndex = null;
+//            } else {
+//                $this->items[] = [
+//                    'operator' => $this->operator,
+//                    'number' => trim($line),
+//                    'product_id' => $this->product_id,
+//                    'order_type_id' => $this->order_type_id,
+//                    'price' => $this->price ?? 0,
+//                    'qty' => $qty,
+//                    'subtotal' => $subtotal,
+//                    'factor' => $factor->name ?? 0
+//                ];
+//            }
+//
+//        }
+//
+//
+//        session(['items' => $this->items]);
+//
+//        $this->calculateTotals();
+//
+//        $this->dispatch('closeModal', modalId: '#itemForm');
+//
+//        $this->reset('operator', 'order_type_id', 'number', 'product_id', 'price', 'qty');
+//
+//        $this->filteredItems = $this->items;
+//
+//        $this->updateOpportunityTotal();
+//
+//    }
     public function addItem(): void
     {
+        $this->validate([
+            'product_id' => 'required',
+            'order_type_id' => 'required',
+            'price' => 'required|numeric|min:0',
+            'qty' => 'required|integer|min:1'
+        ], [
+            'order_type_id.required' => 'Solicitação é obrigatória.',
+            'product_id.required' => 'O produto é obrigatório.',
+            'price.required' => 'O preço é obrigatório.',
+            'price.numeric' => 'O preço deve ser um valor numérico.',
+            'price.min' => 'O preço deve ser um valor positivo.',
+            'qty.required' => 'A quantidade é obrigatória.',
+            'qty.integer' => 'A quantidade deve ser um número inteiro.',
+            'qty.min' => 'A quantidade deve ser pelo menos 1.'
+        ]);
 
         $factor = $this->updateFactors();
         $linesArray = $this->number ? explode(',', $this->number) : [null];
@@ -136,35 +221,24 @@ class ProductModal extends Component
             $qty = is_numeric($this->qty) ? (int)$this->qty : 1;
             $subtotal = $this->price * $qty;
 
+            $itemData = [
+                'operator' => $this->operator,
+                'number' => trim($line),
+                'product_id' => $this->product_id,
+                'order_type_id' => $this->order_type_id,
+                'price' => $this->price ?? 0,
+                'qty' => $qty,
+                'subtotal' => $subtotal,
+                'factor' => $factor->name ?? 0
+            ];
+
             if ($this->editIndex !== null) {
-                $this->items[$this->editIndex] = [
-                    'id' => $this->itemId ?? '',
-                    'opportunity_id' => $this->opportunity_id,
-                    'operator' => $this->operator,
-                    'number' => trim($line),
-                    'product_id' => $this->product_id,
-                    'order_type_id' => $this->order_type_id,
-                    'price' => $this->price ?? 0,
-                    'qty' => $qty,
-                    'subtotal' => $subtotal,
-                    'factor' => $factor->name ?? 0
-                ];
+                $this->items[$this->editIndex] = array_merge(['id' => $this->itemId ?? '', 'opportunity_id' => $this->opportunity_id], $itemData);
                 $this->editIndex = null;
             } else {
-                $this->items[] = [
-                    'operator' => $this->operator,
-                    'number' => trim($line),
-                    'product_id' => $this->product_id,
-                    'order_type_id' => $this->order_type_id,
-                    'price' => $this->price ?? 0,
-                    'qty' => $qty,
-                    'subtotal' => $subtotal,
-                    'factor' => $factor->name ?? 0
-                ];
+                $this->items[] = $itemData;
             }
-
         }
-
 
         session(['items' => $this->items]);
 
@@ -177,7 +251,6 @@ class ProductModal extends Component
         $this->filteredItems = $this->items;
 
         $this->updateOpportunityTotal();
-
     }
 
     public function getSessionItems()

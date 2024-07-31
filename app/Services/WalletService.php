@@ -56,6 +56,7 @@ class WalletService
         foreach ($originalItems as $originalItem) {
             $clonedItem = $originalItem->replicate();
             $clonedItem->opportunity_id = $clone->id;
+            $clonedItem->order_type_id = 3; //renovação
             $clonedItem->save();
         }
 

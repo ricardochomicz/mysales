@@ -1,6 +1,7 @@
 <div>
 
-    <div wire:ignore.self class="modal fade" data-backdrop="static" id="itemForm" aria-labelledby="itemForm">
+    <div wire:ignore.self class="modal fade" data-backdrop="static" tabindex="-1" id="itemForm"
+         aria-labelledby="itemForm">
         <div class="modal-dialog ">
             <div class="modal-content">
 
@@ -11,9 +12,16 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <h4 class="alert-heading">Ops!</h4>
+                            @foreach ($errors->all() as $error)
+                                <p>{{ $error }}</p>
+                            @endforeach
+                        </div>
+                    @endif
                     <div class="row">
-                        <div class="form-group col-sm-6">
-
+                        <div class="form-group col-sm-6" wire:ignore>
                             <label for="operator_id">Operadora</label>
                             <select id="operator_id" class="form-control" wire:model.change="operator">
                                 <option value="">Selecione</option>
@@ -21,22 +29,31 @@
                                     <option value="{{$o->id}}">{{$o->name}}</option>
                                 @endforeach
                             </select>
+
                         </div>
-                        <div class="form-group col-sm-6">
+                        <div class="form-group col-sm-6" wire:ignore>
                             <label for="order_type_id">Solicitação</label>
-                            <select id="order_type_id" class="form-control" wire:model="order_type_id">
+                            <select id="order_type_id" name="order_type_id"
+                                    class="form-control @error('order_type_id') is-invalid @enderror"
+                                    wire:model="order_type_id">
                                 <option value="">Selecione</option>
                                 @foreach($order_types as $ot)
-                                    <option value="{{$ot->id}}">{{$ot->name}}</option>
+                                    <option
+                                        value="{{$ot->id}}">{{$ot->name}}</option>
                                 @endforeach
                             </select>
+                            @error('order_type_id')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="form-group col-sm-12">
-                            <input type="search" class="form-control" placeholder="Buscar Produto"
+                            <input type="search" class="form-control"
+                                   placeholder="Buscar Produto"
                                    wire:model.live="productSearch" id="product-search">
+
                             @if($products->isNotEmpty())
                                 <ul id="product-list" class="list-group mt-2">
                                     @foreach($products as $product)
@@ -88,7 +105,8 @@
     </div>
 
     <!-- Modal de Edição em Massa Simplificada -->
-    <div wire:ignore.self class="modal fade" id="bulkEditModal" role="dialog" aria-labelledby="bulkEditModalLabel" aria-hidden="true">
+    <div wire:ignore.self class="modal fade" id="bulkEditModal" role="dialog" aria-labelledby="bulkEditModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
 
@@ -139,124 +157,138 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" wire:click="updateSelectedItems">Salvar</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" wire:click="closeModal">Fechar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" wire:click="closeModal">
+                        Fechar
+                    </button>
                 </div>
 
             </div>
         </div>
     </div>
-
-
-
-
-    <div class="">
-        <input type="hidden" name="total" value="{{$totalValue}}">
-        <button type="button" wire:click="openModal"
-                class="btn btn-sm btn-primary mt-3 tooltips" data-text="Adicionar Produto">
-            <i class="fas fa-plus"></i>
-        </button>
-        <button type="button" wire:click="openBulkEditModal" @if($isBulkEdit) disabled @endif class="btn btn-sm btn-primary mt-3 tooltips" data-text="Editar em Massa">
-            Editar em Massa
-        </button>
-
-        {{--            <button type="button" class="btn btn-sm btn-danger" wire:click="clearItems">--}}
-        {{--                <i class="fas fa-times"></i>--}}
-        {{--            </button>--}}
-        <div class="form-group col-sm-3 float-right has-search">
-            <input wire:model.live="search" class="form-control" name="search"
-                   placeholder="pesquisa por linha...">
-        </div>
-
-        @if($data)
-            <table class="table caption-top">
-                <thead>
-                <tr>
-                    <th><input type="checkbox" wire:model.change="selectAll"></th>
-                    <th>Nr. Linha</th>
-                    <th>Plano</th>
-                    <th>Valor Unit</th>
-                    <th class="text-center">SubTotal</th>
-                    <th class="text-center">...</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach ($data as $index => $item)
-                    @php
-                        $subtotal = isset($item['subtotal']) ? $item['subtotal'] : $item['price'] * $item['qty'];
-                    @endphp
-                    <tr>
-                        <td><input type="checkbox" wire:model="selectedItems" value="{{ $index }}"></td>
-                        <td>
-                            <input type="hidden" name="dynamicFields[{{ $index }}][id]" value="{{$item['id'] ?? ''}}">
-
-                            {{ $item['number'] }}<br>
-                            <small>{{ $this->getOrderTypeName($item['order_type_id']) }}</small>
-                            <input type="hidden" name="dynamicFields[{{ $index }}][number]" value="{{$item['number']}}">
-                            <input type="hidden" name="dynamicFields[{{ $index }}][order_type_id]"
-                                   value="{{$item['order_type_id']}}">
-                        </td>
-
-                        <td>
-                            {{$this->getProductName($item['product_id'])}}
-                            <input type="hidden" name="dynamicFields[{{ $index }}][product_id]"
-                                   value="{{$item['product_id']}}">
-                        </td>
-                        <td>
-                            {{ $item['price'] }} ( x {{ $item['qty'] }} )
-                            <input type="hidden" name="dynamicFields[{{ $index }}][qty]" value="{{$item['qty']}}">
-                            <input type="hidden" name="dynamicFields[{{ $index }}][price]" value="{{$item['price']}}">
-                            <input type="hidden" name="dynamicFields[{{ $index }}][factor]" value="{{$item['factor']}}">
-
-                            <input type="hidden" name="qty" value="{{$totalQty}}">
-                        </td>
-                        <td class="text-center">
-
-
-                            R$ {{ number_format($subtotal,2,',', '.') }}
-
-                        </td>
-                        <td class="text-center">
-                            <button class="btn btn-primary btn-sm" type="button" wire:click="editItem({{ $index }})"><i
-                                    class="fas fa-sync-alt"></i>
-                            </button>
-                            <button type="button" wire:click="removeItem({{ $index }})" class="btn btn-danger btn-sm">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                @endforeach
-
-                </tbody>
-            </table>
-            <div class="pagination justify-content-center pagination-sm" wire:ignore>
-{{--                {!! $data->links('livewire.pages.opportunities.items.pagination') !!}--}}
-                {!!  $data->links('vendor.pagination.bootstrap-4') !!}
-            </div>
-
-            <div class="col-6 border rounded mb-2 bg-gradient-light">
-                <p class="lead">Resumo Oportunidade</p>
-                <div class="table-responsive">
-                    <table class="table">
-                        <tbody>
-                        <tr>
-                            <th>Linhas:</th>
-                            <td class="text-center">{{$totalQty}}</td>
-                        </tr>
-                        <tr>
-                            <th>Total Oportunidade:</th>
-                            <td class="text-center">R$ {{ number_format($totalValue, 2, ',', '.') }}</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        @endif
+<div class="row">
+    <div class="col-6"></div>
+<div class="col-6">
+    <div class="d-flex justify-content-between align-items-center mb-3 mt-2 bg-gradient-light shadow border rounded">
+        <p class="text-muted text-xl mt-2 ml-2">
+            <i class="fas fa-shopping-cart"></i>
+        </p>
+        <p class="d-flex flex-column text-right mt-2 mr-2">
+            <span class="font-weight-bold">
+                <i class="ion ion-android-arrow-up text-warning"></i> R$ {{ number_format($totalValue, 2, ',', '.') }} / {{$totalQty}}
+            </span><span class="text-muted">TOTAL OPORTUNIDADE</span>
+        </p>
     </div>
 </div>
+</div>
+    <input type="hidden" name="total" value="{{$totalValue}}">
+    <button type="button" wire:click="openModal"
+            class="btn btn-sm btn-primary mt-3 tooltips" data-text="Adicionar Produto">
+        <i class="fas fa-plus"></i>
+    </button>
+    <button type="button" wire:click="openBulkEditModal" @if($isBulkEdit) disabled
+            @endif class="btn btn-sm btn-primary mt-3 tooltips" data-text="Editar em Massa">
+        Editar em Massa
+    </button>
+
+    {{--            <button type="button" class="btn btn-sm btn-danger" wire:click="clearItems">--}}
+    {{--                <i class="fas fa-times"></i>--}}
+    {{--            </button>--}}
+    <div class="form-group col-sm-3 float-right has-search">
+        <input wire:model.live="search" class="form-control" name="search"
+               placeholder="pesquisa por linha...">
+    </div>
+
+    @if($data)
+        <table class="table caption-top">
+            <thead>
+            <tr>
+                <th><input type="checkbox" id="select-all-checkbox" wire:model.change="selectAll"></th>
+                <th>Nr. Linha</th>
+                <th>Plano</th>
+                <th>Valor Unit</th>
+                <th class="text-center">SubTotal</th>
+                <th class="text-center">...</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach ($data as $index => $item)
+                @php
+                    $subtotal = isset($item['subtotal']) ? $item['subtotal'] : $item['price'] * $item['qty'];
+                @endphp
+                <tr>
+                    <td><input type="checkbox" wire:model="selectedItems" value="{{ $index }}"></td>
+                    <td>
+                        <input type="hidden" name="dynamicFields[{{ $index }}][id]" value="{{$item['id'] ?? ''}}">
+
+                        {{ $item['number'] }}<br>
+                        <small>{{ $this->getOrderTypeName($item['order_type_id']) }}</small>
+                        <input type="hidden" name="dynamicFields[{{ $index }}][number]" value="{{$item['number']}}">
+                        <input type="hidden" name="dynamicFields[{{ $index }}][order_type_id]"
+                               value="{{$item['order_type_id']}}">
+                    </td>
+
+                    <td>
+                        {{$this->getProductName($item['product_id'])}}
+                        <input type="hidden" name="dynamicFields[{{ $index }}][product_id]"
+                               value="{{$item['product_id']}}">
+                    </td>
+                    <td>
+                        {{ $item['price'] }} ( x {{ $item['qty'] }} )
+                        <input type="hidden" name="dynamicFields[{{ $index }}][qty]" value="{{$item['qty']}}">
+                        <input type="hidden" name="dynamicFields[{{ $index }}][price]" value="{{$item['price']}}">
+                        <input type="hidden" name="dynamicFields[{{ $index }}][factor]" value="{{$item['factor']}}">
+
+                        <input type="hidden" name="qty" value="{{$totalQty}}">
+                    </td>
+                    <td class="text-center">
+
+
+                        R$ {{ number_format($subtotal,2,',', '.') }}
+
+                    </td>
+                    <td class="text-center">
+                        <button class="btn btn-primary btn-sm" type="button" wire:click="editItem({{ $index }})"><i
+                                class="fas fa-sync-alt"></i>
+                        </button>
+                        <button type="button" wire:click="removeItem({{ $index }})" class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            @endforeach
+
+            </tbody>
+        </table>
+        <div class="pagination justify-content-center pagination-sm" wire:ignore>
+            {{--                {!! $data->links('livewire.pages.opportunities.items.pagination') !!}--}}
+            {!!  $data->links('vendor.pagination.bootstrap-4') !!}
+        </div>
+
+{{--        <div class="col-6 border rounded mb-2 bg-gradient-light">--}}
+{{--            <p class="lead">Resumo Oportunidade</p>--}}
+{{--            <div class="table-responsive">--}}
+{{--                <table class="table">--}}
+{{--                    <tbody>--}}
+{{--                    <tr>--}}
+{{--                        <th>Linhas:</th>--}}
+{{--                        <td class="text-center">{{$totalQty}}</td>--}}
+{{--                    </tr>--}}
+{{--                    <tr>--}}
+{{--                        <th>Total Oportunidade:</th>--}}
+{{--                        <td class="text-center">R$ {{ number_format($totalValue, 2, ',', '.') }}</td>--}}
+{{--                    </tr>--}}
+{{--                    </tbody>--}}
+{{--                </table>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+    @endif
+</div>
+
 
 @pushonce('scripts')
     <script src="{{ asset('assets/plugins/inputmask/inputmask.js') }}"></script>
     <script>
+
         function formatCurrency(input) {
             let valor = input.value;
             valor = valor.replace(/\D/g, '');
@@ -288,18 +320,13 @@
         });
 
         document.addEventListener("DOMContentLoaded", function () {
-            // Obtem o checkbox "Selecionar Todos"
-            var selectAllCheckbox = document.getElementById('select-all-checkbox');
-
-            // Obtem todos os outros checkboxes
-            var moduleCheckboxes = document.querySelectorAll('.module-checkbox');
-
-            // Adiciona um evento de clique ao checkbox "Selecionar Todos"
+            let selectAllCheckbox = document.getElementById('select-all-checkbox');
+            if (!selectAllCheckbox) {
+                return;
+            }
+            let moduleCheckboxes = document.querySelectorAll('.module-checkbox');
             selectAllCheckbox.addEventListener('click', function () {
-                // Verifique se o checkbox "Selecionar Todos" está marcado
-                var isChecked = selectAllCheckbox.checked;
-
-                // Atualiza o estado de todos os outros checkboxes
+                let isChecked = selectAllCheckbox.checked;
                 moduleCheckboxes.forEach(function (checkbox) {
                     checkbox.checked = isChecked;
                 });

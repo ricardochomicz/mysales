@@ -104,7 +104,7 @@
 {{--                </div>--}}
 {{--            </div>--}}
         </div>
-        <hr>
+
 
         <livewire:pages.opportunities.items.product-modal/>
 
