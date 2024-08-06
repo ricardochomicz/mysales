@@ -60,7 +60,7 @@ class Opportunity extends Model
         return $this->belongsTo(Tag::class);
     }
 
-        public function operadora(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function operadora(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Operator::class, 'operator');
     }
@@ -76,22 +76,22 @@ class Opportunity extends Model
             ->withPivot('qty', 'price');
     }
 
-//    public function getItemsPaginationAttribute()
-//    {
-//        return $this->items_opportunity()->paginate(2);
-//    }
+    //    public function getItemsPaginationAttribute()
+    //    {
+    //        return $this->items_opportunity()->paginate(2);
+    //    }
 
     public function comments(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Comment::class)->orderBy('created_at', 'desc');
     }
 
-//    protected function updatedAt(): Attribute
-//    {
-//        return Attribute::make(
-//            get: fn(string $value) => \Illuminate\Support\Carbon::parse($value)->format('d/m/Y'),
-//        );
-//    }
+    //    protected function updatedAt(): Attribute
+    //    {
+    //        return Attribute::make(
+    //            get: fn(string $value) => \Illuminate\Support\Carbon::parse($value)->format('d/m/Y'),
+    //        );
+    //    }
 
 
 
@@ -118,7 +118,7 @@ class Opportunity extends Model
             $query->where('funnel', $status);
         });
 
-        $query->when($filters['probability'] ?? null, function($query, $probability){
+        $query->when($filters['probability'] ?? null, function ($query, $probability) {
             $query->where('probability', $probability);
         });
 
@@ -155,12 +155,13 @@ class Opportunity extends Model
         $query->when($filters['operator'] ?? null, function ($query, $type) {
             $query->where('operator', $type);
         });
-//
+        //
         $query->when(!($filters['search'] || $filters['month'] || $filters['operator']), function ($query) use ($filters) {
             // Se não houver filtro de busca ou status, filtrar pelo mês atual
-            $query->whereMonth('activate', '=', Carbon::now()->month);
+            $query->whereYear('activate', '=', Carbon::now()->year)
+                ->whereMonth('activate', '=', Carbon::now()->month);
         });
-//
+        //
         $query->when($filters['month'], function ($query) use ($filters) {
             // Se datas de início e fim estão presentes, aplicar o filtro
             $query->whereYear('activate', '=', Carbon::parse($filters['month'])->format('Y'))
@@ -216,10 +217,10 @@ class Opportunity extends Model
             });
         });
 
-//        $query->when(!($filters['search'] || $filters['dt_ini'] && $filters['dt_end']), function ($query) use ($filters) {
-//            // Se não houver filtro de busca ou status, filtrar pelo mês atual
-//            $query->whereMonth('forecast', '=', Carbon::now()->month);
-//        });
+        //        $query->when(!($filters['search'] || $filters['dt_ini'] && $filters['dt_end']), function ($query) use ($filters) {
+        //            // Se não houver filtro de busca ou status, filtrar pelo mês atual
+        //            $query->whereMonth('forecast', '=', Carbon::now()->month);
+        //        });
 
 
         $query->when($filters['dt_ini'] && $filters['dt_end'], function ($query) use ($filters) {
