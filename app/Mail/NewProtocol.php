@@ -30,7 +30,7 @@ class NewProtocol extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('comercial@42telecom.com.br', 'Ricardo Chomicz'),
+            from: new Address('empresas.atendimento@gmail.com', 'Ricardo Chomicz'),
             subject: 'Protocolo de Atendimento'
         );
     }

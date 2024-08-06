@@ -2,9 +2,10 @@
 
 namespace App\Services;
 
-use App\Models\Protocol;
-use App\Models\User;
 use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Protocol;
+use App\Mail\NewProtocol;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -20,7 +21,7 @@ class ProtocolService
 
                 ->orderBy('updated_at', 'asc')
                 ->filter($data);
-        }else{
+        } else {
             $protocols->where('tenant_id', auth()->user()->tenant->id)
                 ->where('user_id', auth()->user()->id)
 
@@ -45,11 +46,11 @@ class ProtocolService
             $user = User::where('id', $protocol->user_id)->first();
 
 
-//            if(isset($data['enviar_email']) && $data['enviar_email']){
-//                Mail::to($user->email)
-//                    ->cc('comercial@42telecom.com.br')
-//                    ->send(new NewProtocol($protocol));
-//            }
+            if (isset($data['send_email']) && $data['send_email']) {
+                Mail::to(@$user->client->persons[0]->email)
+                    ->cc('empresas.atendimento@gmail.com')
+                    ->send(new NewProtocol($protocol));
+            }
 
 
             DB::commit();
@@ -65,13 +66,12 @@ class ProtocolService
     {
         if (in_array([1, 2, 3], auth()->user()->roles->pluck('id')->toArray())) {
             return Protocol::where('tenant_id', auth()->user()->tenant->id)->find($id);
-        }else{
+        } else {
             return Protocol::where('tenant_id', auth()->user()->tenant->id)->where('user_id', auth()->user()->id)->find($id);
         }
-
     }
 
-    public function update($data,$id)
+    public function update($data, $id)
     {
         DB::beginTransaction();
         try {
@@ -92,11 +92,11 @@ class ProtocolService
 
             $protocol->update($data);
 
-//            if($data['status_id'] == 3){
-//                Mail::to($user->email)
-//                    ->cc('comercial@42telecom.com.br')
-//                    ->send(new NewProtocol($protocol));
-//            }
+            if ($data['status_id'] == 3) {
+                Mail::to(@$user->client->persons[0]->email)
+                    ->cc('empresas.atendimento@gmail.com')
+                    ->send(new NewProtocol($protocol));
+            }
 
             DB::commit();
             return true;
