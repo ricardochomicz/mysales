@@ -21,12 +21,15 @@ class BaseService
         return $this->modelClass::where('tenant_id', auth()->user()->tenant->id)->orderBy('name')->get(['id', 'name']);
     }
 
-    public function index($filter)
+    public function index($filter, $orderBy = [], $orderDirection = 'asc')
     {
         $query = $this->getQuery($filter);
+        if (!empty($orderBy)) {
+            foreach ($orderBy as $index => $field) {
+                $query->orderBy($field, $orderDirection);
+            }
+        }
         return $query->paginate();
-//        $data = $this->modelClass::filter($filter);
-//        return $data->paginate();
     }
 
     /**
@@ -47,7 +50,7 @@ class BaseService
 
             DB::commit();
             return $model;
-        }catch (\Throwable $e){
+        } catch (\Throwable $e) {
             dd($e);
             DB::rollBack();
             throw $e;
@@ -77,7 +80,7 @@ class BaseService
 
             DB::commit();
             return $model;
-        }catch (\Throwable $e){
+        } catch (\Throwable $e) {
             DB::rollBack();
             throw $e;
         }

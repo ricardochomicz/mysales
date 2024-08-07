@@ -58,9 +58,9 @@ class ProductModal extends Component
         $this->order_types = $order_types->toSelect();
         $this->products = collect();
 
-//        if (session()->has('items')) {
-//            $this->items = session('items');
-//        }
+        //        if (session()->has('items')) {
+        //            $this->items = session('items');
+        //        }
 
         $opportunity = new OpportunityService();
         if (request()->route('id')) {
@@ -99,13 +99,13 @@ class ProductModal extends Component
     {
         if ($this->operator) {
             $this->products = Product::where('operator_id', $this->operator)
+                ->where('visible', true)
                 ->where(function ($query) use ($value) {
                     $query->where('name', 'like', '%' . $value . '%')
                         ->orWhere('price', 'like', '%' . $value . '%');
                 })
                 ->orderBy('name')
                 ->get(['id', 'name', 'price']);
-
         } else {
             $this->products = collect();
         }
@@ -125,76 +125,76 @@ class ProductModal extends Component
         }
     }
 
-//    public function addItem(): void
-//    {
-//
-//        $this->validate([
-//            'product_id' => 'required',
-//            'order_type_id' => 'required',
-//            'price' => 'required|numeric|min:0',
-//            'qty' => 'required|integer|min:1'
-//        ], [
-//            'order_type_id.required' => 'Selecione o Tipo',
-//            'product_id.required' => 'O produto é obrigatório.',
-//            'price.required' => 'O preço é obrigatório.',
-//            'price.numeric' => 'O preço deve ser um valor numérico.',
-//            'price.min' => 'O preço deve ser um valor positivo.',
-//            'qty.required' => 'A quantidade é obrigatória.',
-//            'qty.integer' => 'A quantidade deve ser um número inteiro.',
-//            'qty.min' => 'A quantidade deve ser pelo menos 1.'
-//        ]);
-//
-//        $factor = $this->updateFactors();
-//        $linesArray = $this->number ? explode(',', $this->number) : [null];
-//        $total = 0;
-//
-//        foreach ($linesArray as $line) {
-//            $qty = is_numeric($this->qty) ? (int)$this->qty : 1;
-//            $subtotal = $this->price * $qty;
-//
-//            if ($this->editIndex !== null) {
-//                $this->items[$this->editIndex] = [
-//                    'id' => $this->itemId ?? '',
-//                    'opportunity_id' => $this->opportunity_id,
-//                    'operator' => $this->operator,
-//                    'number' => trim($line),
-//                    'product_id' => $this->product_id,
-//                    'order_type_id' => $this->order_type_id,
-//                    'price' => $this->price ?? 0,
-//                    'qty' => $qty,
-//                    'subtotal' => $subtotal,
-//                    'factor' => $factor->name ?? 0
-//                ];
-//                $this->editIndex = null;
-//            } else {
-//                $this->items[] = [
-//                    'operator' => $this->operator,
-//                    'number' => trim($line),
-//                    'product_id' => $this->product_id,
-//                    'order_type_id' => $this->order_type_id,
-//                    'price' => $this->price ?? 0,
-//                    'qty' => $qty,
-//                    'subtotal' => $subtotal,
-//                    'factor' => $factor->name ?? 0
-//                ];
-//            }
-//
-//        }
-//
-//
-//        session(['items' => $this->items]);
-//
-//        $this->calculateTotals();
-//
-//        $this->dispatch('closeModal', modalId: '#itemForm');
-//
-//        $this->reset('operator', 'order_type_id', 'number', 'product_id', 'price', 'qty');
-//
-//        $this->filteredItems = $this->items;
-//
-//        $this->updateOpportunityTotal();
-//
-//    }
+    //    public function addItem(): void
+    //    {
+    //
+    //        $this->validate([
+    //            'product_id' => 'required',
+    //            'order_type_id' => 'required',
+    //            'price' => 'required|numeric|min:0',
+    //            'qty' => 'required|integer|min:1'
+    //        ], [
+    //            'order_type_id.required' => 'Selecione o Tipo',
+    //            'product_id.required' => 'O produto é obrigatório.',
+    //            'price.required' => 'O preço é obrigatório.',
+    //            'price.numeric' => 'O preço deve ser um valor numérico.',
+    //            'price.min' => 'O preço deve ser um valor positivo.',
+    //            'qty.required' => 'A quantidade é obrigatória.',
+    //            'qty.integer' => 'A quantidade deve ser um número inteiro.',
+    //            'qty.min' => 'A quantidade deve ser pelo menos 1.'
+    //        ]);
+    //
+    //        $factor = $this->updateFactors();
+    //        $linesArray = $this->number ? explode(',', $this->number) : [null];
+    //        $total = 0;
+    //
+    //        foreach ($linesArray as $line) {
+    //            $qty = is_numeric($this->qty) ? (int)$this->qty : 1;
+    //            $subtotal = $this->price * $qty;
+    //
+    //            if ($this->editIndex !== null) {
+    //                $this->items[$this->editIndex] = [
+    //                    'id' => $this->itemId ?? '',
+    //                    'opportunity_id' => $this->opportunity_id,
+    //                    'operator' => $this->operator,
+    //                    'number' => trim($line),
+    //                    'product_id' => $this->product_id,
+    //                    'order_type_id' => $this->order_type_id,
+    //                    'price' => $this->price ?? 0,
+    //                    'qty' => $qty,
+    //                    'subtotal' => $subtotal,
+    //                    'factor' => $factor->name ?? 0
+    //                ];
+    //                $this->editIndex = null;
+    //            } else {
+    //                $this->items[] = [
+    //                    'operator' => $this->operator,
+    //                    'number' => trim($line),
+    //                    'product_id' => $this->product_id,
+    //                    'order_type_id' => $this->order_type_id,
+    //                    'price' => $this->price ?? 0,
+    //                    'qty' => $qty,
+    //                    'subtotal' => $subtotal,
+    //                    'factor' => $factor->name ?? 0
+    //                ];
+    //            }
+    //
+    //        }
+    //
+    //
+    //        session(['items' => $this->items]);
+    //
+    //        $this->calculateTotals();
+    //
+    //        $this->dispatch('closeModal', modalId: '#itemForm');
+    //
+    //        $this->reset('operator', 'order_type_id', 'number', 'product_id', 'price', 'qty');
+    //
+    //        $this->filteredItems = $this->items;
+    //
+    //        $this->updateOpportunityTotal();
+    //
+    //    }
     public function addItem(): void
     {
         $this->validate([
@@ -311,7 +311,6 @@ class ProductModal extends Component
         $this->items = [];
         $this->filteredItems = [];
         session()->forget('items');
-
     }
 
     public function updateFactors()
@@ -374,8 +373,6 @@ class ProductModal extends Component
             $page,
             array_merge(['path' => $path, 'pageName' => 'page'], $options)
         );
-
-
     }
 
     public function updatedSelectAll($value)
@@ -437,6 +434,4 @@ class ProductModal extends Component
     {
         $this->dispatch('closeModal', modalId: '#itemForm');
     }
-
-
 }

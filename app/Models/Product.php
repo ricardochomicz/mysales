@@ -20,7 +20,8 @@ class Product extends Model
         'name',
         'price',
         'image',
-        'description'
+        'description',
+        'visible'
     ];
 
     public function tenant(): \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -63,8 +64,8 @@ class Product extends Model
     protected function price(): Attribute
     {
         return Attribute::make(
-//            get: fn (string $value) => number_format($value, 2, ',', '.'),
-            set: fn(string $value) => floatval(str_replace(',', '.', str_replace('.', '', $value)))
+            //            get: fn (string $value) => number_format($value, 2, ',', '.'),
+            set: fn (string $value) => floatval(str_replace(',', '.', str_replace('.', '', $value)))
         );
     }
 
@@ -77,7 +78,7 @@ class Product extends Model
 
     public function getImageUrlAttribute(): string
     {
-        if (is_null($this->image) ) {
+        if (is_null($this->image)) {
             return Storage::url('avatar/not-image.png');
         }
         return Storage::url($this->image);

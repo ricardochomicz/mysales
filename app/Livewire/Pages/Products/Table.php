@@ -26,6 +26,9 @@ class Table extends Component
     #[Url(history: true)]
     public string $operator = '';
 
+    public $orderBy = ['visible', 'name']; // campos de ordenação
+    public $orderDirection = 'desc'; // direções de ordenação
+
     protected function queryString(): array
     {
         return [
@@ -51,8 +54,8 @@ class Table extends Component
             'operator' => $this->operator,
         ];
 
-        return view('livewire.pages.products.table',[
-            'data' => $model->index($filters),
+        return view('livewire.pages.products.table', [
+            'data' => $model->index($filters, $this->orderBy, $this->orderDirection),
             'operators' => $operators->toSelect(),
             'categories' => $categories->toSelect(),
         ]);
@@ -65,5 +68,13 @@ class Table extends Component
         $this->category = '';
         $this->operator = '';
         $this->dispatch('resetSelectpicker');
+    }
+
+    public function visible($id)
+    {
+        $product = Product::where('tenant_id', auth()->user()->tenant_id)->find($id);
+        if ($product) {
+            $product->update(['visible' => !$product->visible]);
+        }
     }
 }
