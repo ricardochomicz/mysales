@@ -92,7 +92,7 @@ class ProtocolService
 
             $protocol->update($data);
 
-            if ($data['status_id'] == 3) {
+            if ($data['status'] == 3) {
                 Mail::to(@$user->client->persons[0]->email)
                     ->cc('empresas.atendimento@gmail.com')
                     ->send(new NewProtocol($protocol));
