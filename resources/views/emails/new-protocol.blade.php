@@ -23,13 +23,13 @@
 <body>
 
     @if ($protocol->closure != '')
-        <h3>Olá, <b>{{ $protocol->user->client->persons[0]->name }}.</b></h3>
+        <h3>Olá, <b>{{ $protocol->client->persons[0]->name }}.</b></h3>
         <p>
             Segue abaixo o retorno do protocolo de atendimento junto à operadora
             <b>{{ $protocol->operadora->name }}.</b>
         </p>
     @else
-        <h3>Olá, <b>{{ $protocol->user->client->persons[0]->name }}.</b></h3>
+        <h3>Olá, <b>{{ $protocol->client->persons[0]->name }}.</b></h3>
         <p>
             Segue abaixo seu protocolo de atendimento junto à operadora <b>{{ $protocol->operadora->name }}.</b>
         </p>
