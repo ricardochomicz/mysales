@@ -18,6 +18,14 @@ class ProductService extends BaseService
         return Product::where('operator_id', $operatorId)->orderBy('name')->get(['id', 'name']);
     }
 
+    // public function getAllProducts($data)
+    // {
+    //     $products = Product::where('tenant_id', auth()->user()->tenant->id)
+    //         ->filter($data);
+
+    //     return $products->paginate(2);
+    // }
+
     protected function afterSave($model, array $data): void
     {
         if (isset($data['image'])) {
@@ -42,7 +50,7 @@ class ProductService extends BaseService
     {
         if ($model->deleted_at != null) {
             $model->restore();
-        }else{
+        } else {
             $model->delete();
         }
     }
@@ -51,5 +59,4 @@ class ProductService extends BaseService
     {
         return $data->store('/tenant/' . auth()->user()->tenant->id . '/product/' . $id, "public");
     }
-
 }

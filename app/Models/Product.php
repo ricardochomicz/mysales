@@ -43,11 +43,17 @@ class Product extends Model
     {
         $query->when($filters['search'] ?? null, function ($query, $search) {
             $query->where('name', 'LIKE', '%' . $search . '%');
-        })->when($filters['operator'] ?? null, function ($query, $operator) {
+        });
+
+        $query->when($filters['operator'] ?? null, function ($query, $operator) {
             $query->where('operator_id', $operator);
-        })->when($filters['category'] ?? null, function ($query, $category) {
+        });
+
+        $query->when($filters['category'] ?? null, function ($query, $category) {
             $query->where('category_id', $category);
-        })->when($filters['trashed'] ?? null, function ($query, $trashed) {
+        });
+
+        $query->when($filters['trashed'] ?? null, function ($query, $trashed) {
             if ($trashed === 'only') {
                 $query->onlyTrashed();
             }

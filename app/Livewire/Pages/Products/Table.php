@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Operator;
 use App\Models\Product;
 use App\Services\BaseService;
+use App\Services\ProductService;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
