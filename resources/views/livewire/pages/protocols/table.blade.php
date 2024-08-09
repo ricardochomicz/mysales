@@ -82,7 +82,7 @@
                                             @endif
                                         </small>
                                     </td>
-                                    <td class="align-middle">
+                                    <td class="align-middle text-center">
                                         @if ($d->archive)
                                             <a href="{{ asset('storage/' . $d->archive) }}" target="_blank">Download</a>
                                         @else
@@ -90,7 +90,6 @@
                                         @endif
 
                                     </td>
-
                                     <td class="align-middle">
                                         {{ Carbon\Carbon::parse($d->closure)->format('d/m/Y H:i') }}<br>
                                         @if ($d->status == 1)
