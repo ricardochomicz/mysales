@@ -25,6 +25,7 @@ class Protocol extends Model
         'expired',
         'answer',
         'closure',
+        'archive'
     ];
 
     protected $casts = [
@@ -86,6 +87,5 @@ class Protocol extends Model
             $query->whereDate('prompt', '>=', Carbon::parse($filters['dt_ini']));
             $query->whereDate('prompt', '<=', Carbon::parse($filters['dt_end']));
         });
-
     }
 }
