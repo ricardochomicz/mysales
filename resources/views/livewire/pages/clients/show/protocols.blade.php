@@ -30,7 +30,7 @@
                         {!! $this->getNameStatus($protocol->status) !!}
                     </td>
                     <td class="text-center">
-                        @if ($d->archive)
+                        @if ($protocol->archive)
                             <a href="{{ asset('storage/' . $protocol->archive) }}" target="_blank">Download</a>
                         @else
                             <small>Sem anexo.</small>
