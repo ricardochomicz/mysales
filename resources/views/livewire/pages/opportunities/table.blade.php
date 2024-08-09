@@ -52,42 +52,63 @@
                 <x-loader wire:loading.delay wire:loading.class="overlay"></x-loader>
 
                 <div class="table-responsive rounded">
-                    <div class="alert alert-primary">
-                        <div class="row text-center">
-                            <div class="col-3">
-                                <b>Prospect</b><br>
-                                <span>
-                                    {{ $data->filter(fn($item) => $item->funnel == 'prospect')->count() }} -
-                                    R$
-                                    {{ number_format($data->filter(fn($item) => $item->funnel == 'prospect')->sum('total'), 2, ',', '.') }}
-                                </span>
+                    <div class="border rounded mb-3">
+                        <div class="row">
+                            <div class="col-sm-3 col-6">
+                                <div class="description-block border-right">
+                                    <span class="description-percentage">
+                                        {{ $data->filter(fn($item) => $item->funnel == 'prospect')->count() }}
+                                    </span>
+                                    <h5 class="description-header">
+                                        R$
+                                        {{ number_format($data->filter(fn($item) => $item->funnel == 'prospect')->sum('total'), 2, ',', '.') }}
+                                    </h5>
+                                    <span class="description-text text-primary font-weight-bold">PROSPECT</span>
+                                </div>
                             </div>
-                            <div class="col-3">
-                                <b>Negociação</b><br>
-                                <span>
-                                    {{ $data->filter(fn($item) => $item->funnel == 'negotiation')->count() }} -
-                                    R$
-                                    {{ number_format($data->filter(fn($item) => $item->funnel == 'negotiation')->sum('total'), 2, ',', '.') }}
-                                </span>
+
+                            <div class="col-sm-3 col-6">
+                                <div class="description-block border-right">
+                                    <span class="description-percentage ">
+                                        {{ $data->filter(fn($item) => $item->funnel == 'negotiation')->count() }}
+                                    </span>
+                                    <h5 class="description-header">
+                                        R$
+                                        {{ number_format($data->filter(fn($item) => $item->funnel == 'negotiation')->sum('total'), 2, ',', '.') }}
+                                    </h5>
+                                    <span class="description-text text-secondary font-weight-bold">NEGOCIAÇÃO</span>
+                                </div>
+
                             </div>
-                            <div class="col-3">
-                                <b>Fechamento</b><br>
-                                <span>
-                                    {{ $data->filter(fn($item) => $item->funnel == 'closure')->count() }} -
-                                    R$
-                                    {{ number_format($data->filter(fn($item) => $item->funnel == 'closure')->sum('total'), 2, ',', '.') }}
-                                </span>
+
+                            <div class="col-sm-3 col-6">
+                                <div class="description-block border-right">
+                                    <span class="description-percentage ">
+                                        {{ $data->filter(fn($item) => $item->funnel == 'closure')->count() }}
+                                    </span>
+                                    <h5 class="description-header">
+                                        R$
+                                        {{ number_format($data->filter(fn($item) => $item->funnel == 'closure')->sum('total'), 2, ',', '.') }}
+                                    </h5>
+                                    <span class="description-text text-success font-weight-bold">FECHAMENTO</span>
+                                </div>
+
                             </div>
-                            <div class="col-3">
-                                <b>Para Correção</b><br>
-                                <span>
-                                    {{ $data->filter(fn($item) => $item->funnel == 'correction')->count() }} -
-                                    R$
-                                    {{ number_format($data->filter(fn($item) => $item->funnel == 'correction')->sum('total'), 2, ',', '.') }}
-                                </span>
+
+                            <div class="col-sm-3 col-6">
+                                <div class="description-block">
+                                    <span class="description-percentage ">
+                                        {{ $data->filter(fn($item) => $item->funnel == 'correction')->count() }}
+                                    </span>
+                                    <h5 class="description-header">
+                                        R$
+                                        {{ number_format($data->filter(fn($item) => $item->funnel == 'correction')->sum('total'), 2, ',', '.') }}
+                                    </h5>
+                                    <span class="description-text text-danger font-weight-bold">PARA CORREÇÃO</span>
+                                </div>
+
                             </div>
                         </div>
-
                     </div>
 
                     <table class="table table-borderless table-striped table-hover">
@@ -153,9 +174,10 @@
                                                 class="btn btn-primary btn-sm tooltips" data-text="Editar">
                                                 <i class="fas fa-sync-alt"></i>
                                             </a>
-                                            <a href="javascript:void(0)" wire:click="loadComments({{ $d->id }})"
-                                                data-toggle="modal" data-target="#modalComments"
-                                                class="btn btn-success btn-sm tooltips" data-text="Observações">
+                                            <a href="javascript:void(0)"
+                                                wire:click="loadComments({{ $d->id }})" data-toggle="modal"
+                                                data-target="#modalComments" class="btn btn-success btn-sm tooltips"
+                                                data-text="Observações">
                                                 <i class="fas fa-comments"></i>
                                             </a>
                                             <a href="javascript:void(0)"
